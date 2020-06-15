@@ -10,6 +10,5 @@ class CBuilderApp(MDApp):
         self.theme_cls.theme_style = "Dark"
         return Builder.load_file("main.kv")
 
-
 if __name__ == "__main__":
     CBuilderApp().run()
