@@ -5,6 +5,7 @@ ManagerScreen:
 
 <ListItemWithEdit>:
     id:list_item
+    icon_left:icon_left
     ListItemDelete:
         id:icon_left
         list_item:list_item
@@ -29,10 +30,11 @@ ManagerScreen:
         refresh_callback: root.refresh_callback
         root_layout: root
         CList:
-            cScroll:cScroll
             id:cList
+            cScroll:cScroll
     CActionButton:
         data: {'code-braces': 'New','send': 'Send','settings': 'Settings'}
+        cList:cList
         rotation_root_button: True
         callback:self.callback
 

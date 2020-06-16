@@ -6,10 +6,11 @@ from kivy.lang import Builder
 from kivy.properties import StringProperty
 
 from kivymd.app import MDApp
+from kivymd.uix.dialog import MDDialog
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import OneLineIconListItem, IconLeftWidget, IRightBodyTouch, MDList
 from kivymd.uix.selectioncontrol import MDCheckbox
-from kivymd.uix.button import MDFloatingActionButtonSpeedDial
+from kivymd.uix.button import MDFloatingActionButtonSpeedDial,MDFlatButton
 from kivymd.uix.screen import Screen
 from kivymd.icon_definitions import md_icons
             
@@ -17,12 +18,37 @@ class CList(MDList):
     pass
 
 class CActionButton(MDFloatingActionButtonSpeedDial):
+    def addItem(self):
+        self.cList.add_widget(
+            ListItemWithEdit(text="Item", icon="minus-circle-outline")
+            )
+    
     def callback(self, instance):
-        print(instance.icon)
+        if instance.icon == "code-braces":
+            self.addItem()
         
 class ListItemDelete(IconLeftWidget):
+    dialog = None
+    
+    def show_alert_dialog(self):
+        if not self.dialog:
+            self.dialog = MDDialog(
+                text="Delete item?",
+                buttons=[
+                    MDFlatButton(
+                        text="CANCEL", text_color=self.theme_cls.primary_color
+                    ),
+                    MDFlatButton(
+                        text="DELETE", text_color=self.theme_cls.primary_color
+                    ),
+                ],
+            )
+        self.dialog.open()
+        
     def on_release(self):
-        print("Delete: "+self.list_item.text)
+        ok = self.show_alert_dialog()
+        #if ok:        
+        #    self.list_item.parent.remove_widget(self.list_item)
     
 class ListItemWithEdit(OneLineIconListItem):
     icon = StringProperty()
@@ -36,7 +62,7 @@ class MenuScreen(Screen):
 class CLScreen(Screen):
     def updateList(self):
         async def updateList():
-            for i in range(30):
+            for i in range(15):
                 await asynckivy.sleep(0)
                 self.manager.get_screen('cl_screen').cList.add_widget(
                 ListItemWithEdit(text=f"Item {i}", icon="minus-circle-outline")
