@@ -1,4 +1,6 @@
 import kivy
+from kivy.clock import Clock
+from kivymd.utils import asynckivy
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.lang import Builder
 from kivy.properties import StringProperty
@@ -33,12 +35,27 @@ class MenuScreen(Screen):
 
 class CLScreen(Screen):
     def updateList(self):
-        for i in range(30):
-            self.manager.get_screen('cl_screen').cList.add_widget(
-            ListItemWithEdit(text=f"Item {i}", icon="minus-circle-outline")
-            )
+        async def updateList():
+            for i in range(30):
+                await asynckivy.sleep(0)
+                self.manager.get_screen('cl_screen').cList.add_widget(
+                ListItemWithEdit(text=f"Item {i}", icon="minus-circle-outline")
+                )
+        asynckivy.start(updateList())
+        
     def listItemSelected(self):
         print(self.manager.get_screen('cl_screen').cList.text)
+    def refresh_callback(self, *args):
+        '''A method that updates the state of your application
+        while the spinner remains on the screen.'''
+        def refresh_callback(interval):
+            self.manager.get_screen('cl_screen').cList.clear_widgets()
+            self.updateList()
+            self.manager.get_screen('cl_screen').cScroll.refresh_done()
+            self.tick = 0
+
+        Clock.schedule_once(refresh_callback, 1)
+    
 class EditScreen(Screen):
     pass
     

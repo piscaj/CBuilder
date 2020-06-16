@@ -22,10 +22,14 @@ ManagerScreen:
 <CLScreen>:
     name:"cl_screen"
     cList:cList
-    on_enter: root.updateList()
-    ScrollView:
+    cScroll:cScroll
+    on_enter: root.refresh_callback()
+    MDScrollViewRefreshLayout:
         id:cScroll
+        refresh_callback: root.refresh_callback
+        root_layout: root
         CList:
+            cScroll:cScroll
             id:cList
     CActionButton:
         data: {'code-braces': 'New','send': 'Send','settings': 'Settings'}
