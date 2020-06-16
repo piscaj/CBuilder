@@ -1,25 +1,47 @@
-<ListItemWithCheckbox>:
+ManagerScreen:
+    MenuScreen:
+    CLScreen:
+    EditScreen:
 
+<ListItemWithEdit>:
     IconLeftWidget:
         icon: root.icon
 
-    RightCheckbox:
-
-
-Screen:
-    	
-    ScrollView:
-
-        MDList:
-            id: scroll
-          
- 
+<MenuScreen>:
+    name:"menu_screen"
     MDRaisedButton:
         id:CBbut
         pos_hint:{"center_x": 0.5, "center_y": 0.5}
         increment_width: "75dp"
         text:"CBuilder"
-        
-    MDFloatingActionButtonSpeedDial:
-        data: app.data
+        on_press: app.root.current = 'cl_screen'
+
+<CLScreen>:
+    name:"cl_screen"
+    cList:cList
+    on_enter: root.updateList()
+    ScrollView:
+        id:cScroll
+        CList:
+            id:cList
+    CActionButton:
+        data: {'code-braces': 'New','send': 'Send','settings': 'Settings'}
         rotation_root_button: True
+        callback:self.callback
+
+<EditScreen>:
+    name:"EView"
+    CActionButton:
+        data: {'check': 'Save','end': 'Cancel'}
+        rotation_root_button: True
+        callback:self.callback
+
+          
+ 
+    #MDRaisedButton:
+      #  id:CBbut
+      #  pos_hint:{"center_x": 0.5, "center_y": 0.5}
+      #  increment_width: "75dp"
+      #  text:"CBuilder"
+        
+   
