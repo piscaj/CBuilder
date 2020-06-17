@@ -1,3 +1,4 @@
+import json
 import kivy
 from kivy.clock import Clock
 from kivymd.utils import asynckivy
@@ -7,12 +8,31 @@ from kivy.properties import StringProperty
 
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
+from kivy.uix.boxlayout import BoxLayout
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import OneLineIconListItem, IconLeftWidget, IRightBodyTouch, MDList
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.button import MDFloatingActionButtonSpeedDial,MDFlatButton
 from kivymd.uix.screen import Screen
 from kivymd.icon_definitions import md_icons
+
+fileData = {}
+
+def readFile():
+    global fileData
+    print("Started Reading JSON file")
+    with open("config.json", "r") as read_file:
+        print("Converting JSON encoded data into Python dictionary")
+        fileData = json.load(read_file)
+
+        print("Decoded JSON Data From File")
+        for key, value in fileData.items():
+            print(key, ":", value)
+        print("Done reading json file")
+
+
+class ConfirmDelete(BoxLayout):
+    pass
             
 class CList(MDList):
     pass
@@ -30,26 +50,37 @@ class CActionButton(MDFloatingActionButtonSpeedDial):
 class ListItemDelete(IconLeftWidget):
     dialog = None
     
-    def show_alert_dialog(self):
+    def deleteItem(self, inst):
+        self.list_item.parent.remove_widget(self.list_item)
+        self.dialog.dismiss()
+        
+    def closeDialog(self, inst):
+        self.dialog.dismiss()
+    
+    def show_confirmation_dialog(self,_name):
         if not self.dialog:
             self.dialog = MDDialog(
-                text="Delete item?",
+                title="Delete item?",
+                size_hint=(None, None),
+                size=(600, 500),
+                type="alert",
+                text=_name+" will permanintly be removed.",
+                #content_cls=ConfirmDelete(),
                 buttons=[
                     MDFlatButton(
-                        text="CANCEL", text_color=self.theme_cls.primary_color
+                        text="CANCEL", on_release= self.closeDialog
                     ),
                     MDFlatButton(
-                        text="DELETE", text_color=self.theme_cls.primary_color
+                        text="ACCEPT", text_color=self.theme_cls.primary_color, on_release=self.deleteItem
                     ),
                 ],
             )
+        self.dialog.set_normal_height()
         self.dialog.open()
-        
+
     def on_release(self):
-        ok = self.show_alert_dialog()
-        #if ok:        
-        #    self.list_item.parent.remove_widget(self.list_item)
-    
+        self.show_confirmation_dialog(self.list_item.text)
+        
 class ListItemWithEdit(OneLineIconListItem):
     icon = StringProperty()
     
@@ -62,10 +93,12 @@ class MenuScreen(Screen):
 class CLScreen(Screen):
     def updateList(self):
         async def updateList():
-            for i in range(15):
+            global fileData
+            data = fileData["Config"]
+            for name in data:  
                 await asynckivy.sleep(0)
                 self.manager.get_screen('cl_screen').cList.add_widget(
-                ListItemWithEdit(text=f"Item {i}", icon="minus-circle-outline")
+                ListItemWithEdit(text=name.get("RoomName"), icon="minus-circle-outline")
                 )
         asynckivy.start(updateList())
         
@@ -92,10 +125,11 @@ class CBuilderApp(MDApp):
     
     def build(self):
         #self.theme_cls.primary_palette = "Red"
-        self.theme_cls.theme_style = "Dark"
+        self.theme_cls.theme_style = "Light"
         return Builder.load_file("main.kv")
     def on_start(self):
-        pass
+        readFile()
+    
     def on_stop(self):
         print("CBuilder Closing....")
     
