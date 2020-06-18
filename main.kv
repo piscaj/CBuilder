@@ -2,6 +2,7 @@ ManagerScreen:
     MenuScreen:
     CLScreen:
     EditScreen:
+    SettingsScreen:
 
 <ListItemWithEdit>:
     id:list_item
@@ -28,6 +29,7 @@ ManagerScreen:
         on_press: app.root.current = 'cl_screen'
 
 <CLScreen>:
+    id:cScreen
     name:"cl_screen"
     cList:cList
     cScroll:cScroll
@@ -36,22 +38,48 @@ ManagerScreen:
         id:cScroll
         refresh_callback: root.refresh_callback
         root_layout: root
+        size_hint: None,None
+        size: root.width, root.height - c_toolbar.height
         CList:
             id:cList
             cScroll:cScroll
+    CLToolbar:
+        id: c_toolbar
+        cScreen:cScreen
+        cAction:cAction
+        pos_hint: {"top": 1}
+        elevation: 10
+        title: "CBuilder"
+        right_action_items: [["settings", lambda x: self.goSettings()]]
     CActionButton:
-        data: {'code-braces': 'New','send': 'Send','settings': 'Settings'}
+        id:cAction
+        data: {'code-braces': 'New','send': 'Send'}
         cList:cList
+        cScreen:cScreen
         rotation_root_button: True
         callback:self.callback
+   
 
 <EditScreen>:
-    name:"EView"
+    name:"e_screen"
     CActionButton:
         data: {'check': 'Save','end': 'Cancel'}
         rotation_root_button: True
         callback:self.callback
 
+<SettingsScreen>:
+    id:sScreen
+    name:"s_screen"
+    sToolbar:sToolbar
+    SettingsToolbar:
+        id: sToolbar
+        sScreen:sScreen
+        pos_hint: {"top": 1}
+        elevation: 10
+        title: "Setup"
+        left_action_items: [["arrow-left-circle", lambda x: self.back()]]
+
+    
           
  
     #MDRaisedButton:

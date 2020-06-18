@@ -1,28 +1,82 @@
 {
-  "Config": [
-    {
-      "Number": 1,
-      "RoomName": "Classroom 365",
-      "Description": "NVX routing for classroom 365 to Console 1",
-      "Command": "This is a Command 1*2!"
-    },
-    {
-      "Number": 2,
-      "RoomName": "Classroom 27",
-      "Description": "NVX  Routing command for console 1",
-      "Command": "This is a Command 2*8!"
-    },
-    {
-      "Number": 3,
-      "RoomName": "Classroom 278",
-      "Description": "NVX routing for classroom 335 to Console 1",
-      "Command": "This is a Command 8*7!"
-    },
-    {
-      "Number": 4,
-      "RoomName": "Classroom 287",
-      "Description": "NVX Route to auditorium",
-      "Command": "This is a Command 9*2!"
-    }
-  ]
+    "Config": [
+        {
+            "Command": "Add command here",
+            "Description": "Add comments here",
+            "Number": 4,
+            "RoomName": "Room Name"
+        },
+        {
+            "Command": "Add command here",
+            "Description": "Add comments here",
+            "Number": 5,
+            "RoomName": "Room Name"
+        },
+        {
+            "Command": "Add command here",
+            "Description": "Add comments here",
+            "Number": 6,
+            "RoomName": "Room Name"
+        },
+        {
+            "Command": "Add command here",
+            "Description": "Add comments here",
+            "Number": 7,
+            "RoomName": "Room Name"
+        },
+        {
+            "Command": "Add device command",
+            "Description": "Add description",
+            "Number": 9,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "Add device command",
+            "Description": "Add description",
+            "Number": 8,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "Add device command",
+            "Description": "Add description",
+            "Number": 9,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "Add device command",
+            "Description": "Add description",
+            "Number": 10,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "Add device command",
+            "Description": "Add description",
+            "Number": 11,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "Add device command",
+            "Description": "Add description",
+            "Number": 12,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "Add device command",
+            "Description": "Add description",
+            "Number": 13,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "Add device command",
+            "Description": "Add description",
+            "Number": 14,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "Add device command",
+            "Description": "Add description",
+            "Number": 15,
+            "RoomName": "New Room"
+        }
+    ]
 }
