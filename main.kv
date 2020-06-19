@@ -40,6 +40,13 @@ ManagerScreen:
     name:"cl_screen"
     cList:cList
     cScroll:cScroll
+    canvas:
+        Color:
+            rgba: hex('#ffffff')
+        RoundedRectangle:
+            size: self.width, self.height
+            pos: self.pos
+            radius: [0]
     MDScrollViewRefreshLayout:
         id:cScroll
         refresh_callback: root.refresh
