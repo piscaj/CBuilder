@@ -64,22 +64,22 @@ ManagerScreen:
             left_action_items: [["json", lambda x: x]]
             right_action_items: [["cloud-upload-outline", lambda x: c_bottombar.goSettings()],["settings", lambda x: c_bottombar.goSettings()]]
             on_action_button: c_bottombar.addItem()
-    
-   
+       
 <EditScreen>:
     id:eScreen
+    eBottombar:eBottombar
     name:"e_screen"
     canvas:
         Color:
             rgba: hex('#737475')
         RoundedRectangle:
-            size: self.size
-            pos: self.pos
-            radius: 0,0,0,0
+            size: self.width - 100, self.height - 230
+            pos: self.x + 50, self.y + 180
+            radius: [20]
     EditBottomToolbar:
         id:eBottombar
         eScreen:eScreen
-        title: "Edit"
+        title: "Back"
         left_action_items: [["arrow-left-circle-outline", lambda x: self.goBack()]] 
 
 <SettingsScreen>:
