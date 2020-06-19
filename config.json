@@ -1,33 +1,39 @@
 {
     "Config": [
         {
-            "Command": "Add command here",
-            "Description": "Add comments here",
-            "Number": 4,
-            "RoomName": "Room Name"
-        },
-        {
-            "Command": "Add command here",
-            "Description": "Add comments here",
-            "Number": 5,
-            "RoomName": "Room Name"
-        },
-        {
-            "Command": "Add command here",
-            "Description": "Add comments here",
-            "Number": 6,
-            "RoomName": "Room Name"
-        },
-        {
-            "Command": "Add command here",
-            "Description": "Add comments here",
-            "Number": 7,
-            "RoomName": "Room Name"
+            "Command": "Add device command",
+            "Description": "Add description",
+            "Number": 2,
+            "RoomName": "New Room"
         },
         {
             "Command": "Add device command",
             "Description": "Add description",
-            "Number": 9,
+            "Number": 3,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "Add device command",
+            "Description": "Add description",
+            "Number": 4,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "Add device command",
+            "Description": "Add description",
+            "Number": 5,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "Add device command",
+            "Description": "Add description",
+            "Number": 6,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "Add device command",
+            "Description": "Add description",
+            "Number": 7,
             "RoomName": "New Room"
         },
         {
@@ -67,14 +73,14 @@
             "RoomName": "New Room"
         },
         {
-            "Command": "Add device command",
-            "Description": "Add description",
+            "Command": "No device command",
+            "Description": "No description",
             "Number": 14,
             "RoomName": "New Room"
         },
         {
-            "Command": "Add device command",
-            "Description": "Add description",
+            "Command": "No device command",
+            "Description": "No description",
             "Number": 15,
             "RoomName": "New Room"
         }

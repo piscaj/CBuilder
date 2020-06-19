@@ -1,3 +1,4 @@
+#:import hex kivy.utils.get_color_from_hex
 ManagerScreen:
     MenuScreen:
     CLScreen:
@@ -17,7 +18,13 @@ ManagerScreen:
     spacing: "12dp"
     size_hint_y: None
     height: "120dp"
-
+    canvas:
+        Color:
+            rgba: hex('#6d7275')
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: 30,30,30,30
 
 <MenuScreen>:
     name:"menu_screen"
@@ -33,59 +40,64 @@ ManagerScreen:
     name:"cl_screen"
     cList:cList
     cScroll:cScroll
-    on_enter: root.refresh_callback()
     MDScrollViewRefreshLayout:
         id:cScroll
-        refresh_callback: root.refresh_callback
+        refresh_callback: root.refresh
         root_layout: root
+        pos_hint:{"top": 1}
         size_hint: None,None
         size: root.width, root.height - c_toolbar.height
         CList:
             id:cList
+            cScreen:cScreen
             cScroll:cScroll
-    CLToolbar:
-        id: c_toolbar
+    CLBottomToolbar:
+        id: c_bottombar
         cScreen:cScreen
-        cAction:cAction
-        pos_hint: {"top": 1}
-        elevation: 10
-        title: "CBuilder"
-        right_action_items: [["settings", lambda x: self.goSettings()]]
-    CActionButton:
-        id:cAction
-        data: {'code-braces': 'New','send': 'Send'}
         cList:cList
-        cScreen:cScreen
-        rotation_root_button: True
-        callback:self.callback
+        MDToolbar:
+            id:c_toolbar
+            c_bottombar:c_bottombar
+            title: "CBuilder"
+            icon: "plus"
+            type: "bottom"
+            left_action_items: [["json", lambda x: x]]
+            right_action_items: [["cloud-upload-outline", lambda x: c_bottombar.goSettings()],["settings", lambda x: c_bottombar.goSettings()]]
+            on_action_button: c_bottombar.addItem()
+    
    
-
 <EditScreen>:
+    id:eScreen
     name:"e_screen"
-    CActionButton:
-        data: {'check': 'Save','end': 'Cancel'}
-        rotation_root_button: True
-        callback:self.callback
+    canvas:
+        Color:
+            rgba: hex('#737475')
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: 0,0,0,0
+    EditBottomToolbar:
+        id:eBottombar
+        eScreen:eScreen
+        title: "Edit"
+        left_action_items: [["arrow-left-circle-outline", lambda x: self.goBack()]] 
 
 <SettingsScreen>:
     id:sScreen
     name:"s_screen"
-    sToolbar:sToolbar
-    SettingsToolbar:
-        id: sToolbar
+    canvas:
+        Color:
+            rgba: hex('#737475')
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: 30,30,0,0
+    MDRaisedButton:
+        pos_hint:{"center_x": 0.5, "center_y": 0.5}
+        increment_width: "75dp"
+        text:"CBuilder"
+    SettingsBottomToolbar:
+        id:sBottombar
         sScreen:sScreen
-        pos_hint: {"top": 1}
-        elevation: 10
-        title: "Setup"
-        left_action_items: [["arrow-left-circle", lambda x: self.back()]]
-
-    
-          
- 
-    #MDRaisedButton:
-      #  id:CBbut
-      #  pos_hint:{"center_x": 0.5, "center_y": 0.5}
-      #  increment_width: "75dp"
-      #  text:"CBuilder"
-        
-   
+        title: "Settings"
+        right_action_items: [["close", lambda x: self.goBack()]]
