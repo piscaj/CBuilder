@@ -1,4 +1,5 @@
 #:import hex kivy.utils.get_color_from_hex
+#:import SlideTransition kivy.uix.screenmanager.SlideTransition
 ManagerScreen:
     MenuScreen:
     CLScreen:
@@ -33,7 +34,7 @@ ManagerScreen:
         pos_hint:{"center_x": 0.5, "center_y": 0.5}
         increment_width: "75dp"
         text:"CBuilder"
-        on_press: app.root.current = 'cl_screen'
+        on_release: app.root.current = 'cl_screen'
 
 <CLScreen>:
     id:cScreen
@@ -75,20 +76,70 @@ ManagerScreen:
 <EditScreen>:
     id:eScreen
     eBottombar:eBottombar
+    eName:eName
+    eDes:eDes
+    eCom:eCom
     name:"e_screen"
     canvas:
         Color:
-            rgba: hex('#737475')
+            rgba: hex('#ffffff')
         RoundedRectangle:
-            size: self.width - 100, self.height - 230
-            pos: self.x + 50, self.y + 180
-            radius: [20]
+            size: self.width, self.height
+            pos: self.pos
+            radius: [0]
     EditBottomToolbar:
         id:eBottombar
         eScreen:eScreen
         title: "Back"
-        left_action_items: [["arrow-left-circle-outline", lambda x: self.goBack()]] 
-
+        left_action_items: [["arrow-left-circle-outline", lambda x: self.goBack()]]
+    MDTextField:
+        id:eName
+        eScreen:eScreen
+        hint_text: "Room Name"
+        size_hint: 0.5, None
+        pos_hint:{"center_x": 0.5, "center_y": 0.85}
+        multiline: False
+    MDTextField:
+        id:eDes
+        eScreen:eScreen
+        hint_text: "Description"
+        size_hint: 0.5, None
+        multiline: False
+        pos_hint:{"center_x": 0.5, "center_y": 0.65}
+    MDTextField:
+        id:eCom
+        eScreen:eScreen
+        hint_text: "Command"
+        size_hint: 0.5, None
+        multiline: False
+        pos_hint:{"center_x": 0.5, "center_y": 0.45}    
+    MDGridLayout:
+        adaptive_height: True
+        #md_bg_color: app.theme_cls.primary_color
+        pos_hint:{"center_x": 0.5, "center_y": 0.3}
+        padding:10
+        spacing:10
+        cols:4
+        rows:1
+        Widget:
+        MDRaisedButton:
+            id:eSave
+            eScreen:eScreen
+            pos_hint:{"center_x": 0.5, "center_y": 0.5}
+            increment_width: "75dp"
+            text:"Save"
+            on_release: eScreen.saveEdits()
+        MDRaisedButton:
+            id:eCancel
+            pos_hint:{"center_x": 0.5, "center_y": 0.5}
+            increment_width: "75dp"
+            text:"Cancel"
+            on_release:
+                app.root.transition = SlideTransition( duration=0.6, direction="right")
+                app.root.current = 'cl_screen'
+        Widget:
+        
+    
 <SettingsScreen>:
     id:sScreen
     name:"s_screen"

@@ -14,7 +14,7 @@ class FileOperation:
     def deleteFromFile(self, _key, _value):
         with open("config.json", "r") as read_file:
             obj = json.load(read_file)
-            print("Searching", _key, _value)
+            #print("Searching", _key, _value)
             for i in range(len(obj["Config"])):
                 print(i)
                 if obj["Config"][i][_key] == int(_value):
@@ -65,8 +65,8 @@ class FileOperation:
                 file_data = json.load(read_file)
 
                 print("Decoded JSON Data From File")
-                for key, value in file_data.items():
-                    print(key, ":", value)
+                #for key, value in file_data.items():
+                    #print(key, ":", value)
                 print("Done reading json file")
         except FileNotFoundError:
             print("File not found...")

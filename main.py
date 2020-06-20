@@ -1,10 +1,11 @@
 import os
+import json
 import kivy
 from kivy.clock import Clock
 from kivymd.utils import asynckivy
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition, SlideTransition, CardTransition, NoTransition
 from kivy.lang import Builder
-from kivy.properties import StringProperty
+from kivy.properties import StringProperty, ObjectProperty
 from kivymd.uix.toolbar import MDBottomAppBar, MDToolbar
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
@@ -15,6 +16,10 @@ from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.button import MDFloatingActionButtonSpeedDial, MDFlatButton
 from fileOps import FileOperation
 from kivymd.icon_definitions import md_icons
+from kivy.core.window import Window
+
+Window.keyboard_anim_args = {'d': .2, 't': 'in_out_expo'}
+Window.softinput_mode = "below_target"
 
 f = FileOperation()
 fileData = {}
@@ -65,7 +70,6 @@ class ListItemDelete(IconLeftWidget):
 class MenuScreen(Screen):
     pass
 
-
 class CLScreen(Screen):
     def updateList(self):
         async def updateList():
@@ -98,7 +102,31 @@ class CLScreen(Screen):
             self.refresh()
 
 class EditScreen(Screen):
-    pass
+    passedId = StringProperty()
+    
+    def on_enter(self):
+        global fileData
+        data = fileData
+        for i in range(len(data["Config"])):
+                if data["Config"][i]["Number"] == int(self.manager.statedata):
+                    self.eName.text = data["Config"][i]["RoomName"]
+                    self.eDes.text = data["Config"][i]["Description"]
+                    self.eCom.text = data["Config"][i]["Command"]
+                    break
+    
+    def saveEdits(self):
+        global fileData
+        data = fileData
+        for i in range(len(data["Config"])):
+                if data["Config"][i]["Number"] == int(self.manager.statedata):
+                    data["Config"][i]["RoomName"] = self.eName.text
+                    data["Config"][i]["Description"] = self.eDes.text
+                    data["Config"][i]["Command"] = self.eCom.text
+                    break
+        with open("config.json", "w") as file_write:
+            file_write.write(json.dumps(data, sort_keys=True,
+                                        indent=4, separators=(',', ': ')))
+            
 
 class SettingsScreen(Screen):
     pass
@@ -108,9 +136,10 @@ class ListItemWithEdit(TwoLineIconListItem):
 
     def on_release(self):
         print(self.text, self.id)
-        self.parent.cScreen.manager.transition = CardTransition(
+        self.parent.cScreen.manager.transition = SlideTransition(
             duration=0.6, direction="left")
         self.parent.cScreen.manager.current = 'e_screen'
+        self.parent.cScreen.manager.statedata = self.id
 
 class CLBottomToolbar(MDBottomAppBar):
     def goSettings(self):
@@ -129,7 +158,7 @@ class CLBottomToolbar(MDBottomAppBar):
 
 class EditBottomToolbar(MDToolbar):
     def goBack(self):
-        self.eScreen.manager.transition = CardTransition(
+        self.eScreen.manager.transition = SlideTransition(
             duration=0.6, direction="right")
         self.eScreen.manager.current = 'cl_screen'
 
@@ -139,11 +168,9 @@ class SettingsBottomToolbar(MDToolbar):
         self.sScreen.manager.current = 'cl_screen'
 
 class ManagerScreen(ScreenManager):
-    pass
+    statedata = ObjectProperty()
 
 class CBuilderApp(MDApp):
-
-    global fileData
 
     def build(self):
         #self.theme_cls.primary_palette = "Red"
@@ -152,6 +179,7 @@ class CBuilderApp(MDApp):
         return Builder.load_file("main.kv")
 
     def on_start(self):
+        global fileData
         fileData = f.readFile()
 
     def on_stop(self):
