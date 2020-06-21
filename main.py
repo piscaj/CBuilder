@@ -15,6 +15,7 @@ from kivymd.uix.list import TwoLineIconListItem, IconLeftWidget, IRightBodyTouch
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.button import MDFloatingActionButtonSpeedDial, MDFlatButton
 from fileOps import FileOperation
+from ftpOps import FtpOperation
 from kivymd.icon_definitions import md_icons
 from kivy.core.window import Window
 
@@ -23,6 +24,7 @@ Window.softinput_mode = "below_target"
 
 f = FileOperation()
 fileData = {}
+#sftp =  FtpOperation()
 
 class ConfirmDelete(BoxLayout):
     pass
@@ -113,7 +115,7 @@ class EditScreen(Screen):
                     self.eDes.text = data["Config"][i]["Description"]
                     self.eCom.text = data["Config"][i]["Command"]
                     break
-    
+                
     def saveEdits(self):
         global fileData
         data = fileData
@@ -130,7 +132,34 @@ class EditScreen(Screen):
 
 class SettingsScreen(Screen):
     pass
-
+class ViewCodeScreen(Screen):
+    def on_enter(self):
+        global fileData
+        data = fileData
+        self.vLabel.text = json.dumps(data, indent=4, sort_keys=True)
+class FtpScreen(Screen):
+    host = 'localhost'
+    port = 22
+    username = 'ivan'
+    keyfile_path = None
+    password = 'secretpassword'
+ 
+    #sftpclient = sftp.createConnection(host, port, username, password, keyfile_path, 'DSA')
+    
+     # List files in the default directory on the remote computer.
+    #dirlist = sftpclient.listdir('.')
+    #for row in dirlist:
+    #    print row
+ 
+    # Retrieve a file with the name 'remote_file.txt' on the remote computer and store it in a file named 'downloaded_file.txt'
+    # next to this SFT client program.
+    #sftpclient.get('remote_file.txt', 'downloaded_file.txt')
+    # Upload a file that locally has the name 'testfile.txt' to a file on the remote computer that will have the name 'remote_testfile.txt'.
+    #sftpclient.put('testfile.txt', 'remote_testfile.txt')
+ 
+    # We're done with the SFTPClient.
+    #sftpclient.close()
+    
 class ListItemWithEdit(TwoLineIconListItem):
     icon = StringProperty()
 
@@ -140,12 +169,21 @@ class ListItemWithEdit(TwoLineIconListItem):
             duration=0.6, direction="left")
         self.parent.cScreen.manager.current = 'e_screen'
         self.parent.cScreen.manager.statedata = self.id
-
 class CLBottomToolbar(MDBottomAppBar):
+    def goFTP(self):
+        self.cScreen.manager.transition = CardTransition(
+            duration=0.6, direction="up")
+        self.cScreen.manager.current = 'f_screen'
+    
     def goSettings(self):
         self.cScreen.manager.transition = CardTransition(
             duration=0.6, direction="up")
         self.cScreen.manager.current = 's_screen'
+    
+    def goViewCode(self):
+        self.cScreen.manager.transition = CardTransition(
+            duration=0.6, direction="up")
+        self.cScreen.manager.current = 'v_screen'
 
     def addItem(self):
         itemAdded = f.addToFile()
@@ -155,21 +193,17 @@ class CLBottomToolbar(MDBottomAppBar):
                 ListItemWithEdit(id=str(f.numberOfItems()),
                                  text="New Room", icon="minus-circle-outline", secondary_text="No description")
             )
-
 class EditBottomToolbar(MDToolbar):
     def goBack(self):
         self.eScreen.manager.transition = SlideTransition(
             duration=0.6, direction="right")
         self.eScreen.manager.current = 'cl_screen'
-
 class SettingsBottomToolbar(MDToolbar):
     def goBack(self):
         self.sScreen.manager.transition = NoTransition()
         self.sScreen.manager.current = 'cl_screen'
-
 class ManagerScreen(ScreenManager):
     statedata = ObjectProperty()
-
 class CBuilderApp(MDApp):
 
     def build(self):

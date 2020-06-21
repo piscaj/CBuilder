@@ -5,6 +5,8 @@ ManagerScreen:
     CLScreen:
     EditScreen:
     SettingsScreen:
+    ViewCodeScreen:
+    FtpScreen:
 
 <ListItemWithEdit>:
     id:list_item
@@ -69,8 +71,8 @@ ManagerScreen:
             title: "CBuilder"
             icon: "plus"
             type: "bottom"
-            left_action_items: [["json", lambda x: x]]
-            right_action_items: [["cloud-upload-outline", lambda x: c_bottombar.goSettings()],["settings", lambda x: c_bottombar.goSettings()]]
+            left_action_items: [["json", lambda x: c_bottombar.goViewCode()]]
+            right_action_items: [["cloud-upload-outline", lambda x: c_bottombar.goFTP()],["settings", lambda x: c_bottombar.goSettings()]]
             on_action_button: c_bottombar.addItem()
        
 <EditScreen>:
@@ -159,3 +161,49 @@ ManagerScreen:
         sScreen:sScreen
         title: "Settings"
         right_action_items: [["close", lambda x: self.goBack()]]
+<ViewCodeScreen>:
+    id:vScreen
+    vLabel:vLabel
+    name:"v_screen"
+    canvas:
+        Color:
+            rgba: hex('#737475')
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: 30,30,0,0
+    ScrollView:
+        pos_hint:{"top": 1}
+        size_hint: None,None
+        size: root.width, root.height - vBottombar.height
+        Label:
+            id: vLabel
+            padding: [40, 40]
+            size_hint: None, None   
+            size: self.texture_size
+            text: "JSON"
+    SettingsBottomToolbar:
+        id:vBottombar
+        sScreen:vScreen
+        title: "JSON"
+        right_action_items: [["close", lambda x: self.goBack()]]
+<FtpScreen>:
+    id:fScreen
+    name:"f_screen"
+    canvas:
+        Color:
+            rgba: hex('#737475')
+        RoundedRectangle:
+            size: self.size
+            pos: self.pos
+            radius: 30,30,0,0
+    MDRaisedButton:
+        pos_hint:{"center_x": 0.5, "center_y": 0.5}
+        increment_width: "75dp"
+        text:"FTP"
+    SettingsBottomToolbar:
+        id:fBottombar
+        sScreen:fScreen
+        title: "File Transfer"
+        right_action_items: [["close", lambda x: self.goBack()]]
+

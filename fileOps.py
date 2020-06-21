@@ -74,6 +74,4 @@ class FileOperation:
             if succsess:
                 file_data = readFile()
         return file_data
-
-    def editListItem(self):
-        pass
+    
