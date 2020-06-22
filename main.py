@@ -13,7 +13,7 @@ from kivy.uix.boxlayout import BoxLayout
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import TwoLineIconListItem, IconLeftWidget, IRightBodyTouch, MDList
 from kivymd.uix.selectioncontrol import MDCheckbox
-from kivymd.uix.button import MDFloatingActionButtonSpeedDial, MDFlatButton
+from kivymd.uix.button import MDFloatingActionButtonSpeedDial, MDFlatButton, MDRaisedButton
 from fileOps import FileOperation
 from ftpOps import FtpOperation
 from kivymd.icon_definitions import md_icons
@@ -138,10 +138,29 @@ class ViewCodeScreen(Screen):
         data = fileData
         self.vLabel.text = json.dumps(data, indent=4, sort_keys=True)
 class FtpScreen(Screen):
-    host = 'ip'
-    username = 'crestron'
-    password = ''
-    path = '/user'
+    #def on_enter(self):
+    #    global fileData
+    #    data = fileData
+    #    for i in range(len(data["Connect"])):
+    #        self.fHost.text = data["Connect"][i]["Host"]
+    #        self.fUser.text = data["Connect"][i]["User"]
+    #        self.fPass.text = data["Connect"][i]["Pass"]
+    #        #self.fDir.text = data["Connect"][i]["Directory"]
+    #        break
+    pass            
+    def saveEdits(self):
+        global fileData
+        data = fileData
+        for i in range(len(data["Connect"])):
+            data["Connect"][i]["Host"] = self.fHost.text
+            data["Connect"][i]["User"] = self.fUser.text
+            data["Connect"][i]["Pass"] = self.fPass.text
+            #data["Connect"][i]["Directory"] = self.fDir.text
+            break
+        
+        with open("config.json", "w") as file_write:
+            file_write.write(json.dumps(data, sort_keys=True,
+                                        indent=4, separators=(',', ': ')))  
 class ListItemWithEdit(TwoLineIconListItem):
     icon = StringProperty()
 
@@ -184,6 +203,10 @@ class SettingsBottomToolbar(MDToolbar):
     def goBack(self):
         self.sScreen.manager.transition = NoTransition()
         self.sScreen.manager.current = 'cl_screen'
+class FtpBottomToolbar(MDToolbar):
+    def goBack(self):
+        self.fScreen.manager.transition = NoTransition()
+        self.fScreen.manager.current = 'cl_screen'
 class ManagerScreen(ScreenManager):
     statedata = ObjectProperty()
 class CBuilderApp(MDApp):

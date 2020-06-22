@@ -190,6 +190,10 @@ ManagerScreen:
         right_action_items: [["close", lambda x: self.goBack()]]
 <FtpScreen>:
     id:fScreen
+    fBottombar:fBottombar
+    fHost:fHost
+    fUser:fUser
+    fPass:fPass
     name:"f_screen"
     canvas:
         Color:
@@ -198,28 +202,28 @@ ManagerScreen:
             size: self.width, self.height
             pos: self.pos
             radius: [0]
-    SettingsBottomToolbar:
+    FtpBottomToolbar:
         id:fBottombar
-        sScreen:fScreen
+        fScreen:fScreen
         title: "File Transfer"
         right_action_items: [["close", lambda x: self.goBack()]]
     MDTextField:
-        id:fName
-        eScreen:fScreen
-        hint_text: "Room Name"
+        id:fHost
+        fScreen:fScreen
+        hint_text: "Host"
         size_hint: 0.5, None
         pos_hint:{"center_x": 0.5, "center_y": 0.85}
         multiline: False
     MDTextField:
-        id:fDes
-        eScreen:fScreen
-        hint_text: "Description"
+        id:fUser
+        fScreen:fScreen
+        hint_text: "User"
         size_hint: 0.5, None
         multiline: False
         pos_hint:{"center_x": 0.5, "center_y": 0.65}
     MDTextField:
-        id:fCom
-        eScreen:fScreen
+        id:fPass
+        fScreen:fScreen
         hint_text: "Command"
         size_hint: 0.5, None
         multiline: False
@@ -230,24 +234,26 @@ ManagerScreen:
         pos_hint:{"center_x": 0.5, "center_y": 0.3}
         padding:10
         spacing:10
-        cols:4
+        cols:5
         rows:1
         Widget:
         MDRaisedButton:
             id:fSave
-            eScreen:fScreen
-            pos_hint:{"center_x": 0.5, "center_y": 0.5}
-            increment_width: "75dp"
+            #fScreen:fScreen
+            #pos_hint:{"center_x": 0.5, "center_y": 0.5}
+            #increment_width: "75dp"
             text:"Save"
-            on_release: fScreen.saveEdits()
+            #on_release: eScreen.saveEdits()
         MDRaisedButton:
-            id:fCancel
-            pos_hint:{"center_x": 0.5, "center_y": 0.5}
-            increment_width: "75dp"
-            text:"Cancel"
-            on_release:
-                app.root.transition = NoTransition( duration=0.6, direction="right")
-                app.root.current = 'cl_screen'
+            id:fSend
+            #pos_hint:{"center_x": 0.5, "center_y": 0.5}
+            #increment_width: "75dp"
+            text:"Send"
+        MDRaisedButton:
+            id:fRet
+            #pos_hint:{"center_x": 0.5, "center_y": 0.5}
+            #increment_width: "75dp"
+            text:"Retrieve"
         Widget:
     
 

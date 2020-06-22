@@ -45,6 +45,13 @@ class FileOperation:
 
     def makeFile(self):
         data = {}
+        data['Connect'] = []
+        data['Connect'].append({
+            'Host': 'Processor IP',
+            'User': 'crestron',
+            'Pass': '',
+            'Directory': '/user'
+        })
         data['Config'] = []
         data['Config'].append({
             'Command': 'No device command',
@@ -70,8 +77,8 @@ class FileOperation:
                 print("Done reading json file")
         except FileNotFoundError:
             print("File not found...")
-            succsess = makeFile()
+            succsess = self.makeFile()
             if succsess:
-                file_data = readFile()
+                file_data = self.readFile()
         return file_data
     

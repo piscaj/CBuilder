@@ -41,6 +41,50 @@
             "Description": "No description",
             "Number": 6,
             "RoomName": "New Room"
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Number": 7,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Number": 8,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Number": 9,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Number": 10,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Number": 11,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Number": 12,
+            "RoomName": "New Room"
+        }
+    ],
+    "Connect": [
+        {
+            "Directory": "/user",
+            "Host": "Processor IP",
+            "Pass": "",
+            "User": "crestron"
         }
     ]
 }
