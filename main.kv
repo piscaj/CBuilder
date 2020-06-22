@@ -212,7 +212,7 @@ ManagerScreen:
         fScreen:fScreen
         hint_text: "Host"
         size_hint: 0.5, None
-        pos_hint:{"center_x": 0.5, "center_y": 0.85}
+        pos_hint:{"center_x": 0.5, "center_y": 0.95}
         multiline: False
     MDTextField:
         id:fUser
@@ -220,40 +220,47 @@ ManagerScreen:
         hint_text: "User"
         size_hint: 0.5, None
         multiline: False
-        pos_hint:{"center_x": 0.5, "center_y": 0.65}
+        pos_hint:{"center_x": 0.5, "center_y": 0.75}
     MDTextField:
         id:fPass
         fScreen:fScreen
         hint_text: "Command"
         size_hint: 0.5, None
         multiline: False
-        pos_hint:{"center_x": 0.5, "center_y": 0.45}    
-    MDGridLayout:
-        adaptive_height: True
+        pos_hint:{"center_x": 0.5, "center_y": 0.55}
+    MDTextField:
+        id:fPath
+        fScreen:fScreen
+        hint_text: "Path"
+        size_hint: 0.5, None
+        multiline: False
+        pos_hint:{"center_x": 0.5, "center_y": 0.35}   
+    #MDGridLayout:
+        #adaptive_height: True
         #md_bg_color: app.theme_cls.primary_color
-        pos_hint:{"center_x": 0.5, "center_y": 0.3}
-        padding:10
-        spacing:10
-        cols:5
-        rows:1
-        Widget:
-        MDRaisedButton:
-            id:fSave
-            #fScreen:fScreen
+        #pos_hint:{"center_x": 0.5, "center_y": 0.15}
+        #padding:10
+        #spacing:10
+        #cols:5
+        #rows:1
+        #Widget:
+        #MDRaisedButton:
+        #    id:fSave
+        #    fScreen:fScreen
             #pos_hint:{"center_x": 0.5, "center_y": 0.5}
             #increment_width: "75dp"
-            text:"Save"
+        #    text:"Save"
             #on_release: eScreen.saveEdits()
-        MDRaisedButton:
-            id:fSend
+        #MDRaisedButton:
+        #    id:fSend
             #pos_hint:{"center_x": 0.5, "center_y": 0.5}
             #increment_width: "75dp"
-            text:"Send"
-        MDRaisedButton:
-            id:fRet
-            #pos_hint:{"center_x": 0.5, "center_y": 0.5}
-            #increment_width: "75dp"
-            text:"Retrieve"
-        Widget:
+        #    text:"Send"
+        #MDRaisedButton:
+        #    id:fRet
+        #    #pos_hint:{"center_x": 0.5, "center_y": 0.5}
+        #    #increment_width: "75dp"
+        #    text:"Retrieve"
+        #Widget:
     
 
