@@ -28,10 +28,8 @@ sftp =  FtpOperation()
 
 class ConfirmDelete(BoxLayout):
     pass
-
 class CList(MDList):
     pass
-
 class ListItemDelete(IconLeftWidget):
     dialog = None
 
@@ -68,7 +66,6 @@ class ListItemDelete(IconLeftWidget):
 
     def on_release(self):
         self.show_confirmation_dialog(self.list_item.text)
-
 class MenuScreen(Screen):
     pass
 class CLScreen(Screen):
@@ -102,16 +99,16 @@ class CLScreen(Screen):
         if self.transition_progress == 1.0:
             self.refresh()
 class FtpScreen(Screen):
-    #def on_enter(self):
-    #    global fileData
-    #    data = fileData
-    #    for i in range(len(data["Connect"])):
-    #        self.fHost.text = data["Connect"][i]["Host"]
-    #        self.fUser.text = data["Connect"][i]["User"]
-    #        self.fPass.text = data["Connect"][i]["Pass"]
-    #        #self.fDir.text = data["Connect"][i]["Directory"]
-    #        break
-    pass            
+    def on_enter(self):
+        global fileData
+        data = fileData
+        for i in range(len(data["Connect"])):
+            self.fHost.text = data["Connect"][i]["Host"]
+            self.fUser.text = data["Connect"][i]["User"]
+            self.fPass.text = data["Connect"][i]["Pass"]
+            self.fPath.text = data["Connect"][i]["Directory"]
+            break
+                    
     def saveEdits(self):
         global fileData
         data = fileData
@@ -119,7 +116,7 @@ class FtpScreen(Screen):
             data["Connect"][i]["Host"] = self.fHost.text
             data["Connect"][i]["User"] = self.fUser.text
             data["Connect"][i]["Pass"] = self.fPass.text
-            #data["Connect"][i]["Directory"] = self.fDir.text
+            data["Connect"][i]["Directory"] = self.fPath.text
             break
         
         with open("config.json", "w") as file_write:
@@ -127,7 +124,19 @@ class FtpScreen(Screen):
                                         indent=4, separators=(',', ': ')))
     def goBack(self):
         self.manager.transition = NoTransition()
-        self.manager.current = 'cl_screen'
+        self.manager.current = 'cl_screen' 
+    
+    def upload(self):
+        global fileData
+        data = fileData
+        for i in range(len(data["Connect"])):
+            _host = data["Connect"][i]["Host"]
+            _user = data["Connect"][i]["User"]
+            _pass = data["Connect"][i]["Pass"]
+            _path = data["Connect"][i]["Directory"]
+        
+        sftp.writeFile(_host,_user,_pass,_path,"config.json")
+    
     
 class EditScreen(Screen):
     passedId = StringProperty()

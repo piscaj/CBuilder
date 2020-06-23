@@ -76,10 +76,10 @@ ManagerScreen:
             on_action_button: c_bottombar.addItem()
 <FtpScreen>:
     id:fScreen
-    #fBottombar:fBottombar
     fHost:fHost
     fUser:fUser
     fPass:fPass
+    fPath:fPath
     name:"f_screen"
     canvas:
         Color:
@@ -88,11 +88,6 @@ ManagerScreen:
             size: self.width, self.height
             pos: self.pos
             radius: [0]
-    #FtpBottomToolbar:
-    #    id:fBottombar
-    #    fScreen:fScreen
-    #    title: "File Transfer"
-    #    right_action_items: [["close", lambda x: self.goBack()]]
     MDTextField:
         id:fHost
         fScreen:fScreen
@@ -110,7 +105,7 @@ ManagerScreen:
     MDTextField:
         id:fPass
         fScreen:fScreen
-        hint_text: "Command"
+        hint_text: "Pass"
         size_hint: 0.5, None
         multiline: False
         pos_hint:{"center_x": 0.5, "center_y": 0.5}
@@ -135,6 +130,7 @@ ManagerScreen:
         MDIconButton:
             id:fSave
             icon: "content-save-outline"
+            user_font_size: "36sp"
             fScreen:fScreen
             pos_hint:{"center_x": 0.5, "center_y": 0.5}
             increment_width: "75dp"
@@ -143,27 +139,31 @@ ManagerScreen:
         MDIconButton:
             id:fSend
             fScreen:fScreen
-            icon: "cloud-upload"
+            icon: "cloud-upload-outline"
+            user_font_size: "36sp"
             pos_hint:{"center_x": 0.5, "center_y": 0.5}
             increment_width: "75dp"
-            text:"Send"
+            text:"Upload"
+            on_release: fScreen.upload()
         MDIconButton:
             id:fRet
             fScreen:fScreen
-            icon: "cloud-download"
+            icon: "cloud-download-outline"
+            user_font_size: "36sp"
             pos_hint:{"center_x": 0.5, "center_y": 0.5}
             increment_width: "75dp"
             text:"Retrieve"
+            on_release: fScreen.download()
         Widget:
     MDIconButton:
         id:fClose
         fScreen:fScreen
-        icon: "close"
-        pos_hint:{"center_x": 0.93, "center_y": 0.06}
+        icon: "close-circle-outline"
+        user_font_size: "36sp"
+        pos_hint:{"center_x": 0.93, "center_y": 0.07}
         increment_width: "75dp"
         text:"Exit"
-        on_release: fScreen.goBack()
-        #right_action_items: [["close", lambda x: fScreen.goBack()]]  
+        on_release: fScreen.goBack() 
 <EditScreen>:
     id:eScreen
     eBottombar:eBottombar
@@ -244,8 +244,9 @@ ManagerScreen:
     MDIconButton:
         id:sClose
         sScreen:sScreen
-        icon: "close"
-        pos_hint:{"center_x": 0.93, "center_y": 0.06}
+        icon: "close-circle-outline"
+        user_font_size: "36sp"
+        pos_hint:{"center_x": 0.93, "center_y": 0.07}
         increment_width: "75dp"
         text:"Exit"
         on_release: sScreen.goBack()
@@ -260,21 +261,33 @@ ManagerScreen:
             size: self.size
             pos: self.pos
             radius: [0]
-    ScrollView:
+    GridLayout:
+        size_hint_y: None
+        height: root.height
         pos_hint:{"top": 1}
-        size_hint: None,None
-        size: root.width, root.height
-        Label:
-            id: vLabel
-            padding: [40, 40]
-            size_hint: None, None   
-            size: self.texture_size
-            text: "JSON"
+        padding:10
+        spacing:10
+        cols:3
+        rows:1
+        Widget:
+        ScrollView:
+            pos_hint:{"top": 1}
+            size_hint: None,None
+            size: "350dp", root.height
+            Label:
+                id: vLabel
+                padding: [40, 40]
+                size_hint: None, None   
+                size: self.texture_size
+                text: "JSON"
+        Widget:
     MDIconButton:
         id:vClose
         vScreen:vScreen
-        icon: "close"
-        pos_hint:{"center_x": 0.93, "center_y": 0.06}
+        icon: "close-circle-outline"
+        opposite_colors:True
+        user_font_size: "36sp"
+        pos_hint:{"center_x": 0.93, "center_y": 0.07}
         increment_width: "75dp"
         text:"Exit"
         on_release: vScreen.goBack()
