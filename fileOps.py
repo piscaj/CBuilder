@@ -1,4 +1,5 @@
 import json
+import os
 
 class FileOperation:
 
@@ -59,7 +60,8 @@ class FileOperation:
             'Number': 0,
             'RoomName': 'Room Name'
         })
-        with open('config.json', 'w') as write_file:
+        app_folder = os.path.dirname(os.path.abspath(__file__)) 
+        with open(app_folder+'/config.json', 'w') as write_file:
             json.dump(data, write_file)
             print("New file added...")
             return True

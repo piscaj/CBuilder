@@ -26,6 +26,8 @@ f = FileOperation()
 fileData = {}
 sftp =  FtpOperation()
 
+app_folder = os.path.dirname(os.path.abspath(__file__))
+
 class ConfirmDelete(BoxLayout):
     pass
 class CList(MDList):

@@ -1,5 +1,6 @@
 import pysftp
-import json
+import os
+
 class FtpOperation:
 
     def __init__(self):
@@ -10,8 +11,9 @@ class FtpOperation:
         cnopts = pysftp.CnOpts()
         cnopts.hostkeys = None  
         with pysftp.Connection(_host, username=_username, password=_password, cnopts=cnopts) as sftp:
-            with sftp.cd(_path):         
-                sftp.put("."+'/'+_file)
+            with sftp.cd(_path):
+                app_folder = os.path.dirname(os.path.abspath(__file__))         
+                sftp.put(app_folder+'/'+_file)
       
     def getFile(self, host, username, password, path, file):
         with pysftp.Connection(host, username=username, password=password) as sftp:
