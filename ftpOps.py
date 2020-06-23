@@ -17,21 +17,30 @@ class FtpOperation:
                     app_folder = os.path.dirname(os.path.abspath(__file__))         
                     sftp.put(app_folder+'/'+_file)
                     print("[SFTP]File sent...")
+                    return "Success"
                     
         except pysftp.ConnectionException as err:
             print("[SFTP]ERROR]",err)
+            return err
         except pysftp.CredentialException as err:
             print("[SFTP]ERROR]",err)
+            return err
         except pysftp.SSHException as err:
             print("[SFTP]ERROR]",err)
+            return err
         except pysftp.AuthenticationException as err:
             print("[SFTP]ERROR]",err)
+            return err
         except pysftp.PasswordRequiredException as err:
             print("[SFTP]ERROR]",err)
+            return err
         except pysftp.HostKeysException as err:
             print("[SFTP]ERROR]",err)
+            return err
         except :
+            err = "Unknown ERROR has occured..."
             print("[SFTP]ERROR]")
+            return err
         
       
     def getFile(self, host, username, password, path, file):

@@ -100,18 +100,10 @@ class CLScreen(Screen):
     def on_enter(self, *args):
         if self.transition_progress == 1.0:
             self.refresh()
-class FtpScreen(Screen):
-    def on_enter(self):
-        global fileData
-        data = fileData
-        for i in range(len(data["Connect"])):
-            self.fHost.text = data["Connect"][i]["Host"]
-            self.fUser.text = data["Connect"][i]["User"]
-            self.fPass.text = data["Connect"][i]["Pass"]
-            self.fPath.text = data["Connect"][i]["Directory"]
-            break
-                    
-    def saveEdits(self):
+class FtpScreen(Screen,ThemableBehavior):
+    dialog = None
+    
+    def saveEdits(self,inst):
         global fileData
         data = fileData
         for i in range(len(data["Connect"])):
@@ -124,11 +116,9 @@ class FtpScreen(Screen):
         with open("config.json", "w") as file_write:
             file_write.write(json.dumps(data, sort_keys=True,
                                         indent=4, separators=(',', ': ')))
-    def goBack(self):
-        self.manager.transition = NoTransition()
-        self.manager.current = 'cl_screen' 
+        self.dialog.dismiss()
     
-    def upload(self):
+    def uploadConfig(self,inst):
         global fileData
         data = fileData
         for i in range(len(data["Connect"])):
@@ -138,6 +128,77 @@ class FtpScreen(Screen):
             _path = data["Connect"][i]["Directory"]
         
         sftp.writeFile(_host,_user,_pass,_path,"config.json")
+        self.dialog.dismiss()
+        
+    def closeDialog(self, inst):
+        self.dialog.dismiss()
+
+    def show_confirmation_save(self):
+        if not self.dialog:
+            self.dialog = MDDialog(
+                title="Save settings?",
+                size_hint=(None, None),
+                size=(600, 500),
+                type="alert",
+                #theme_text_color= "Custom",
+                #text_color= self.theme_cls.disabled_hint_text_color,
+                text="This will update your SFTP settings.",
+                # content_cls=ConfirmDelete(),
+                buttons=[
+                    MDFlatButton(
+                        text="CANCEL", on_release=self.closeDialog
+                    ),
+                    MDFlatButton(
+                        text="ACCEPT", text_color=self.theme_cls.primary_color, on_release=self.saveEdits
+                    ),
+                ],
+            )
+        self.dialog.set_normal_height()
+        self.dialog.open()
+    
+    def show_confirmation_upload(self):
+        if not self.dialog:
+            self.dialog = MDDialog(
+                title="Upload configuration file?",
+                size_hint=(None, None),
+                size=(600, 500),
+                type="alert",
+                #theme_text_color= "Custom",
+                #text_color= self.theme_cls.disabled_hint_text_color,
+                text="This will transfer config.json to the remote path.",
+                # content_cls=ConfirmDelete(),
+                buttons=[
+                    MDFlatButton(
+                        text="CANCEL", on_release=self.closeDialog
+                    ),
+                    MDFlatButton(
+                        text="ACCEPT", text_color=self.theme_cls.primary_color, on_release=self.uploadConfig
+                    ),
+                ],
+            )
+        self.dialog.set_normal_height()
+        self.dialog.open()
+    
+    def on_enter(self):
+        global fileData
+        data = fileData
+        for i in range(len(data["Connect"])):
+            self.fHost.text = data["Connect"][i]["Host"]
+            self.fUser.text = data["Connect"][i]["User"]
+            self.fPass.text = data["Connect"][i]["Pass"]
+            self.fPath.text = data["Connect"][i]["Directory"]
+            break
+                    
+    def save(self):
+        self.show_confirmation_save()
+    
+    def upload(self):
+        self.show_confirmation_upload()
+        
+    def goBack(self):
+        self.manager.transition = NoTransition()
+        self.manager.current = 'cl_screen' 
+    
     
     
 class EditScreen(Screen):

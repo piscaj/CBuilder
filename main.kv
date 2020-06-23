@@ -16,7 +16,7 @@ ManagerScreen:
         list_item:list_item
         icon: root.icon
 
-<ConfirmDelete>:
+<ProgressBar>:
     orientation: "vertical"
     spacing: "12dp"
     size_hint_y: None
@@ -28,6 +28,9 @@ ManagerScreen:
             size: self.size
             pos: self.pos
             radius: 30,30,30,30
+    MDProgressBar:
+        value: 50
+        color: app.theme_cls.accent_color
 
 <MenuScreen>:
     name:"menu_screen"
@@ -135,7 +138,7 @@ ManagerScreen:
             pos_hint:{"center_x": 0.5, "center_y": 0.5}
             increment_width: "75dp"
             text:"Save"
-            on_release: fScreen.saveEdits()
+            on_release: fScreen.save()
         MDIconButton:
             id:fSend
             fScreen:fScreen
