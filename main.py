@@ -198,9 +198,6 @@ class FtpScreen(Screen,ThemableBehavior):
     def goBack(self):
         self.manager.transition = NoTransition()
         self.manager.current = 'cl_screen' 
-    
-    
-    
 class EditScreen(Screen):
     passedId = StringProperty()
     
