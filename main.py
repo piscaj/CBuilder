@@ -71,7 +71,6 @@ class ListItemDelete(IconLeftWidget):
 
 class MenuScreen(Screen):
     pass
-
 class CLScreen(Screen):
     def updateList(self):
         async def updateList():
@@ -102,7 +101,34 @@ class CLScreen(Screen):
     def on_enter(self, *args):
         if self.transition_progress == 1.0:
             self.refresh()
-
+class FtpScreen(Screen):
+    #def on_enter(self):
+    #    global fileData
+    #    data = fileData
+    #    for i in range(len(data["Connect"])):
+    #        self.fHost.text = data["Connect"][i]["Host"]
+    #        self.fUser.text = data["Connect"][i]["User"]
+    #        self.fPass.text = data["Connect"][i]["Pass"]
+    #        #self.fDir.text = data["Connect"][i]["Directory"]
+    #        break
+    pass            
+    def saveEdits(self):
+        global fileData
+        data = fileData
+        for i in range(len(data["Connect"])):
+            data["Connect"][i]["Host"] = self.fHost.text
+            data["Connect"][i]["User"] = self.fUser.text
+            data["Connect"][i]["Pass"] = self.fPass.text
+            #data["Connect"][i]["Directory"] = self.fDir.text
+            break
+        
+        with open("config.json", "w") as file_write:
+            file_write.write(json.dumps(data, sort_keys=True,
+                                        indent=4, separators=(',', ': ')))
+    def goBack(self):
+        self.manager.transition = NoTransition()
+        self.manager.current = 'cl_screen'
+    
 class EditScreen(Screen):
     passedId = StringProperty()
     
@@ -127,40 +153,19 @@ class EditScreen(Screen):
                     break
         with open("config.json", "w") as file_write:
             file_write.write(json.dumps(data, sort_keys=True,
-                                        indent=4, separators=(',', ': ')))
-            
-
+                                        indent=4, separators=(',', ': ')))            
 class SettingsScreen(Screen):
-    pass
+    def goBack(self):
+        self.manager.transition = NoTransition()
+        self.manager.current = 'cl_screen'
 class ViewCodeScreen(Screen):
     def on_enter(self):
         global fileData
         data = fileData
         self.vLabel.text = json.dumps(data, indent=4, sort_keys=True)
-class FtpScreen(Screen):
-    #def on_enter(self):
-    #    global fileData
-    #    data = fileData
-    #    for i in range(len(data["Connect"])):
-    #        self.fHost.text = data["Connect"][i]["Host"]
-    #        self.fUser.text = data["Connect"][i]["User"]
-    #        self.fPass.text = data["Connect"][i]["Pass"]
-    #        #self.fDir.text = data["Connect"][i]["Directory"]
-    #        break
-    pass            
-    def saveEdits(self):
-        global fileData
-        data = fileData
-        for i in range(len(data["Connect"])):
-            data["Connect"][i]["Host"] = self.fHost.text
-            data["Connect"][i]["User"] = self.fUser.text
-            data["Connect"][i]["Pass"] = self.fPass.text
-            #data["Connect"][i]["Directory"] = self.fDir.text
-            break
-        
-        with open("config.json", "w") as file_write:
-            file_write.write(json.dumps(data, sort_keys=True,
-                                        indent=4, separators=(',', ': ')))  
+    def goBack(self):
+        self.manager.transition = NoTransition()
+        self.manager.current = 'cl_screen'  
 class ListItemWithEdit(TwoLineIconListItem):
     icon = StringProperty()
 
@@ -199,14 +204,6 @@ class EditBottomToolbar(MDToolbar):
         self.eScreen.manager.transition = SlideTransition(
             duration=0.6, direction="right")
         self.eScreen.manager.current = 'cl_screen'
-class SettingsBottomToolbar(MDToolbar):
-    def goBack(self):
-        self.sScreen.manager.transition = NoTransition()
-        self.sScreen.manager.current = 'cl_screen'
-class FtpBottomToolbar(MDToolbar):
-    def goBack(self):
-        self.fScreen.manager.transition = NoTransition()
-        self.fScreen.manager.current = 'cl_screen'
 class ManagerScreen(ScreenManager):
     statedata = ObjectProperty()
 class CBuilderApp(MDApp):

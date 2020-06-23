@@ -82,9 +82,9 @@
     "Connect": [
         {
             "Directory": "/user",
-            "Host": "Processor IP",
+            "Host": "",
             "Pass": "",
-            "User": "crestron"
+            "User": ""
         }
     ]
 }

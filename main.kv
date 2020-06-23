@@ -4,11 +4,10 @@
 ManagerScreen:
     MenuScreen:
     CLScreen:
+    FtpScreen:
     EditScreen:
     SettingsScreen:
     ViewCodeScreen:
-    FtpScreen:
-
 <ListItemWithEdit>:
     id:list_item
     icon_left:icon_left
@@ -73,9 +72,98 @@ ManagerScreen:
             icon: "plus"
             type: "bottom"
             left_action_items: [["json", lambda x: c_bottombar.goViewCode()]]
-            right_action_items: [["cloud-upload-outline", lambda x: c_bottombar.goFTP()],["settings", lambda x: c_bottombar.goSettings()]]
+            right_action_items: [["cloud-outline", lambda x: c_bottombar.goFTP()],["settings", lambda x: c_bottombar.goSettings()]]
             on_action_button: c_bottombar.addItem()
-       
+<FtpScreen>:
+    id:fScreen
+    #fBottombar:fBottombar
+    fHost:fHost
+    fUser:fUser
+    fPass:fPass
+    name:"f_screen"
+    canvas:
+        Color:
+            rgba: hex('#ffffff')
+        RoundedRectangle:
+            size: self.width, self.height
+            pos: self.pos
+            radius: [0]
+    #FtpBottomToolbar:
+    #    id:fBottombar
+    #    fScreen:fScreen
+    #    title: "File Transfer"
+    #    right_action_items: [["close", lambda x: self.goBack()]]
+    MDTextField:
+        id:fHost
+        fScreen:fScreen
+        hint_text: "Host"
+        size_hint: 0.5, None
+        pos_hint:{"center_x": 0.5, "center_y": 0.9}
+        multiline: False
+    MDTextField:
+        id:fUser
+        fScreen:fScreen
+        hint_text: "User"
+        size_hint: 0.5, None
+        multiline: False
+        pos_hint:{"center_x": 0.5, "center_y": 0.7}
+    MDTextField:
+        id:fPass
+        fScreen:fScreen
+        hint_text: "Command"
+        size_hint: 0.5, None
+        multiline: False
+        pos_hint:{"center_x": 0.5, "center_y": 0.5}
+    MDTextField:
+        id:fPath
+        fScreen:fScreen
+        hint_text: "Path"
+        size_hint: 0.5, None
+        multiline: False
+        pos_hint:{"center_x": 0.5, "center_y": 0.3}   
+    GridLayout:
+        #adaptive_height: True
+        #md_bg_color: app.theme_cls.primary_color
+        size_hint_y: None
+        height: self.minimum_height
+        pos_hint:{"center_x": 0.5, "center_y": 0.1}
+        padding:10
+        spacing:10
+        cols:5
+        rows:1
+        Widget:
+        MDIconButton:
+            id:fSave
+            icon: "content-save-outline"
+            fScreen:fScreen
+            pos_hint:{"center_x": 0.5, "center_y": 0.5}
+            increment_width: "75dp"
+            text:"Save"
+            on_release: fScreen.saveEdits()
+        MDIconButton:
+            id:fSend
+            fScreen:fScreen
+            icon: "cloud-upload"
+            pos_hint:{"center_x": 0.5, "center_y": 0.5}
+            increment_width: "75dp"
+            text:"Send"
+        MDIconButton:
+            id:fRet
+            fScreen:fScreen
+            icon: "cloud-download"
+            pos_hint:{"center_x": 0.5, "center_y": 0.5}
+            increment_width: "75dp"
+            text:"Retrieve"
+        Widget:
+    MDIconButton:
+        id:fClose
+        fScreen:fScreen
+        icon: "close"
+        pos_hint:{"center_x": 0.93, "center_y": 0.06}
+        increment_width: "75dp"
+        text:"Exit"
+        on_release: fScreen.goBack()
+        #right_action_items: [["close", lambda x: fScreen.goBack()]]  
 <EditScreen>:
     id:eScreen
     eBottombar:eBottombar
@@ -152,16 +240,15 @@ ManagerScreen:
         RoundedRectangle:
             size: self.size
             pos: self.pos
-            radius: 30,30,0,0
-    MDRaisedButton:
-        pos_hint:{"center_x": 0.5, "center_y": 0.5}
-        increment_width: "75dp"
-        text:"CBuilder"
-    SettingsBottomToolbar:
-        id:sBottombar
+            radius: [0]
+    MDIconButton:
+        id:sClose
         sScreen:sScreen
-        title: "Settings"
-        right_action_items: [["close", lambda x: self.goBack()]]
+        icon: "close"
+        pos_hint:{"center_x": 0.93, "center_y": 0.06}
+        increment_width: "75dp"
+        text:"Exit"
+        on_release: sScreen.goBack()
 <ViewCodeScreen>:
     id:vScreen
     vLabel:vLabel
@@ -172,95 +259,24 @@ ManagerScreen:
         RoundedRectangle:
             size: self.size
             pos: self.pos
-            radius: 30,30,0,0
+            radius: [0]
     ScrollView:
         pos_hint:{"top": 1}
         size_hint: None,None
-        size: root.width, root.height - vBottombar.height
+        size: root.width, root.height
         Label:
             id: vLabel
             padding: [40, 40]
             size_hint: None, None   
             size: self.texture_size
             text: "JSON"
-    SettingsBottomToolbar:
-        id:vBottombar
-        sScreen:vScreen
-        title: "JSON"
-        right_action_items: [["close", lambda x: self.goBack()]]
-<FtpScreen>:
-    id:fScreen
-    fBottombar:fBottombar
-    fHost:fHost
-    fUser:fUser
-    fPass:fPass
-    name:"f_screen"
-    canvas:
-        Color:
-            rgba: hex('#ffffff')
-        RoundedRectangle:
-            size: self.width, self.height
-            pos: self.pos
-            radius: [0]
-    FtpBottomToolbar:
-        id:fBottombar
-        fScreen:fScreen
-        title: "File Transfer"
-        right_action_items: [["close", lambda x: self.goBack()]]
-    MDTextField:
-        id:fHost
-        fScreen:fScreen
-        hint_text: "Host"
-        size_hint: 0.5, None
-        pos_hint:{"center_x": 0.5, "center_y": 0.95}
-        multiline: False
-    MDTextField:
-        id:fUser
-        fScreen:fScreen
-        hint_text: "User"
-        size_hint: 0.5, None
-        multiline: False
-        pos_hint:{"center_x": 0.5, "center_y": 0.75}
-    MDTextField:
-        id:fPass
-        fScreen:fScreen
-        hint_text: "Command"
-        size_hint: 0.5, None
-        multiline: False
-        pos_hint:{"center_x": 0.5, "center_y": 0.55}
-    MDTextField:
-        id:fPath
-        fScreen:fScreen
-        hint_text: "Path"
-        size_hint: 0.5, None
-        multiline: False
-        pos_hint:{"center_x": 0.5, "center_y": 0.35}   
-    #MDGridLayout:
-        #adaptive_height: True
-        #md_bg_color: app.theme_cls.primary_color
-        #pos_hint:{"center_x": 0.5, "center_y": 0.15}
-        #padding:10
-        #spacing:10
-        #cols:5
-        #rows:1
-        #Widget:
-        #MDRaisedButton:
-        #    id:fSave
-        #    fScreen:fScreen
-            #pos_hint:{"center_x": 0.5, "center_y": 0.5}
-            #increment_width: "75dp"
-        #    text:"Save"
-            #on_release: eScreen.saveEdits()
-        #MDRaisedButton:
-        #    id:fSend
-            #pos_hint:{"center_x": 0.5, "center_y": 0.5}
-            #increment_width: "75dp"
-        #    text:"Send"
-        #MDRaisedButton:
-        #    id:fRet
-        #    #pos_hint:{"center_x": 0.5, "center_y": 0.5}
-        #    #increment_width: "75dp"
-        #    text:"Retrieve"
-        #Widget:
-    
+    MDIconButton:
+        id:vClose
+        vScreen:vScreen
+        icon: "close"
+        pos_hint:{"center_x": 0.93, "center_y": 0.06}
+        increment_width: "75dp"
+        text:"Exit"
+        on_release: vScreen.goBack()
+
 
