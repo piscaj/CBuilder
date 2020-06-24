@@ -77,12 +77,42 @@
             "Description": "No description",
             "Number": 12,
             "RoomName": "New Room"
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Number": 13,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Number": 14,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Number": 15,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Number": 16,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Number": 17,
+            "RoomName": "New Room"
         }
     ],
     "Connect": [
         {
             "Directory": "/user",
-            "Host": "192.168.2",
+            "Host": "192.168.2.29",
             "Pass": "",
             "User": "crestron"
         }

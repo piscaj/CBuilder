@@ -311,6 +311,7 @@ class CLBottomToolbar(MDBottomAppBar):
                 ListItemWithEdit(id=str(f.numberOfItems()),
                                  text="New Room", icon="minus-circle-outline", secondary_text="No description")
             )
+        self.cScreen.refresh()
 class EditBottomToolbar(MDToolbar):
     def goBack(self):
         self.eScreen.manager.transition = SlideTransition(
