@@ -138,7 +138,7 @@ class FtpScreen(Screen,ThemableBehavior):
             self.dialogUploading.dismiss()
             self.show_exception(str(transfer))
     
-    def something_that_takes_5_seconds_to_run(self):
+    def startUpload(self):
         thistime = time.time() 
         while thistime + 2 > time.time(): # 5 seconds
             time.sleep(.5)
@@ -185,13 +185,13 @@ class FtpScreen(Screen,ThemableBehavior):
                         text="CANCEL", on_release=self.closeUploadDialog
                     ),
                     MDFlatButton(
-                        text="ACCEPT", text_color=self.theme_cls.primary_color, on_release=self.show_uploading
+                        text="ACCEPT", text_color=self.theme_cls.primary_color, on_release=self.showUploadingDialog
                     ),
                 ],
             )
         self.dialogUpload.open()
     
-    def show_uploading(self,inst):
+    def showUploadingDialog(self,inst):
         self.closeUploadDialog(inst)
         if not self.dialogUploading:
             self.dialogUploading = MDDialog(
@@ -204,7 +204,7 @@ class FtpScreen(Screen,ThemableBehavior):
             )
         self.dialogUploading.open()
         if self.dialogUploading:
-            mythread = threading.Thread(target=self.something_that_takes_5_seconds_to_run)
+            mythread = threading.Thread(target=self.startUpload)
             mythread.start()
     def show_exception(self,err):
         if not self.dialogException:
