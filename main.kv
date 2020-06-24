@@ -16,22 +16,16 @@ ManagerScreen:
         list_item:list_item
         icon: root.icon
 
-<ProgressBar>:
+<Progress>:
     orientation: "vertical"
     spacing: "12dp"
     size_hint_y: None
-    height: "120dp"
-    canvas:
-        Color:
-            rgba: hex('#6d7275')
-        RoundedRectangle:
-            size: self.size
-            pos: self.pos
-            radius: 30,30,30,30
-    MDProgressBar:
-        value: 50
-        color: app.theme_cls.accent_color
-
+    height: "60dp"
+    MDSpinner:
+        size_hint: None, None
+        size: dp(46), dp(46)
+        pos_hint: {'center_x': .5, 'center_y': .5}
+        active: True
 <MenuScreen>:
     name:"menu_screen"
     MDRaisedButton:
@@ -147,7 +141,7 @@ ManagerScreen:
             pos_hint:{"center_x": 0.5, "center_y": 0.5}
             increment_width: "75dp"
             text:"Upload"
-            on_release: fScreen.upload()
+            on_release: fScreen.show_confirmation_upload()
         MDIconButton:
             id:fRet
             fScreen:fScreen

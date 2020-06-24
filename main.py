@@ -2,6 +2,7 @@ import os
 import json
 import kivy
 from kivy.clock import Clock
+import time, threading
 from kivymd.utils import asynckivy
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition, SlideTransition, CardTransition, NoTransition
 from kivy.lang import Builder
@@ -9,7 +10,7 @@ from kivy.properties import StringProperty, ObjectProperty
 from kivymd.uix.toolbar import MDBottomAppBar, MDToolbar
 from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
-from kivy.uix.boxlayout import BoxLayout
+from kivy.uix.floatlayout import FloatLayout
 from kivymd.theming import ThemableBehavior
 from kivymd.uix.list import TwoLineIconListItem, IconLeftWidget, IRightBodyTouch, MDList
 from kivymd.uix.selectioncontrol import MDCheckbox
@@ -28,7 +29,7 @@ sftp =  FtpOperation()
 
 app_folder = os.path.dirname(os.path.abspath(__file__))
 
-class ConfirmDelete(BoxLayout):
+class Progress(FloatLayout):
     pass
 class CList(MDList):
     pass
@@ -101,7 +102,10 @@ class CLScreen(Screen):
         if self.transition_progress == 1.0:
             self.refresh()
 class FtpScreen(Screen,ThemableBehavior):
-    dialog = None
+    dialogSave = None
+    dialogUpload = None
+    dialogUploading = None
+    dialogException = None
     
     def saveEdits(self,inst):
         global fileData
@@ -116,9 +120,9 @@ class FtpScreen(Screen,ThemableBehavior):
         with open("config.json", "w") as file_write:
             file_write.write(json.dumps(data, sort_keys=True,
                                         indent=4, separators=(',', ': ')))
-        self.dialog.dismiss()
+        self.dialogSave.dismiss()
     
-    def uploadConfig(self,inst):
+    def uploadConfig(self):
         global fileData
         data = fileData
         for i in range(len(data["Connect"])):
@@ -127,57 +131,96 @@ class FtpScreen(Screen,ThemableBehavior):
             _pass = data["Connect"][i]["Pass"]
             _path = data["Connect"][i]["Directory"]
         
-        sftp.writeFile(_host,_user,_pass,_path,"config.json")
-        self.dialog.dismiss()
+        transfer = sftp.writeFile(_host,_user,_pass,_path,"config.json")
+        if transfer == "Success":
+            self.dialogUploading.dismiss()
+        else:
+            self.dialogUploading.dismiss()
+            self.show_exception(str(transfer))
+    
+    def something_that_takes_5_seconds_to_run(self):
+        thistime = time.time() 
+        while thistime + 2 > time.time(): # 5 seconds
+            time.sleep(.5)
+        self.uploadConfig()
         
-    def closeDialog(self, inst):
-        self.dialog.dismiss()
+    def closeSaveDialog(self, inst):
+        self.dialogSave.dismiss()
+    def closeUploadDialog(self, inst):
+        self.dialogUpload.dismiss()
+    def closeUploadingDialog(self, inst):
+        self.dialogUploading.dismiss()
+    def closeExceptionDialog(self, inst):
+        self.dialogException.dismiss()
 
     def show_confirmation_save(self):
-        if not self.dialog:
-            self.dialog = MDDialog(
+        if not self.dialogSave:
+            self.dialogSave = MDDialog(
                 title="Save settings?",
                 size_hint=(None, None),
                 size=(600, 500),
                 type="alert",
-                #theme_text_color= "Custom",
-                #text_color= self.theme_cls.disabled_hint_text_color,
                 text="This will update your SFTP settings.",
-                # content_cls=ConfirmDelete(),
                 buttons=[
                     MDFlatButton(
-                        text="CANCEL", on_release=self.closeDialog
+                        text="CANCEL", on_release=self.closeSaveDialog
                     ),
                     MDFlatButton(
                         text="ACCEPT", text_color=self.theme_cls.primary_color, on_release=self.saveEdits
                     ),
                 ],
             )
-        self.dialog.set_normal_height()
-        self.dialog.open()
+        self.dialogSave.open()
     
     def show_confirmation_upload(self):
-        if not self.dialog:
-            self.dialog = MDDialog(
+        if not self.dialogUpload:
+            self.dialogUpload = MDDialog(
                 title="Upload configuration file?",
                 size_hint=(None, None),
                 size=(600, 500),
                 type="alert",
-                #theme_text_color= "Custom",
-                #text_color= self.theme_cls.disabled_hint_text_color,
                 text="This will transfer config.json to the remote path.",
-                # content_cls=ConfirmDelete(),
                 buttons=[
                     MDFlatButton(
-                        text="CANCEL", on_release=self.closeDialog
+                        text="CANCEL", on_release=self.closeUploadDialog
                     ),
                     MDFlatButton(
-                        text="ACCEPT", text_color=self.theme_cls.primary_color, on_release=self.uploadConfig
+                        text="ACCEPT", text_color=self.theme_cls.primary_color, on_release=self.show_uploading
                     ),
                 ],
             )
-        self.dialog.set_normal_height()
-        self.dialog.open()
+        self.dialogUpload.open()
+    
+    def show_uploading(self,inst):
+        self.closeUploadDialog(inst)
+        if not self.dialogUploading:
+            self.dialogUploading = MDDialog(
+                title="Uploading configuration file?",
+                size_hint=(None, None),
+                size=(600, 500),
+                type="custom",
+                text="",
+                content_cls=Progress()
+            )
+        self.dialogUploading.open()
+        if self.dialogUploading:
+            mythread = threading.Thread(target=self.something_that_takes_5_seconds_to_run)
+            mythread.start()
+    def show_exception(self,err):
+        if not self.dialogException:
+            self.dialogException = MDDialog(
+                title="Ooops!?",
+                size_hint=(None, None),
+                size=(600, 500),
+                type="alert",
+                text=err,
+                buttons=[
+                    MDFlatButton(
+                        text="DISMISS", text_color=self.theme_cls.primary_color, on_release=self.closeExceptionDialog
+                    ),
+                ],
+            )
+        self.dialogException.open()
     
     def on_enter(self):
         global fileData
