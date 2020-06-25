@@ -1,124 +1,64 @@
 {
     "Config": [
         {
-            "Command": "1*3%6*4$5*2!7*4%",
-            "Description": "NVX routing for console 1",
-            "Number": 8,
-            "RoomName": "Room 247"
-        },
-        {
-            "Command": "Add device command",
-            "Description": "Add description",
-            "Number": 9,
-            "RoomName": "Atrium"
-        },
-        {
-            "Command": "Add device command",
-            "Description": "Add description",
-            "Number": 10,
-            "RoomName": "New Room"
-        },
-        {
-            "Command": "Add device command",
-            "Description": "Add description",
-            "Number": 11,
-            "RoomName": "New Room"
-        },
-        {
-            "Command": "Add device command",
-            "Description": "Add description",
-            "Number": 12,
+            "Command": "No device command",
+            "Description": "No description",
+            "Number": 170551170243344089478006849354230320790,
             "RoomName": "New Room"
         },
         {
             "Command": "No device command",
             "Description": "No description",
-            "Number": 14,
+            "Number": 171014580519579772444451743532382604950,
             "RoomName": "New Room"
         },
         {
             "Command": "No device command",
             "Description": "No description",
-            "Number": 6,
+            "Number": 172215181910435430222329782363468254870,
             "RoomName": "New Room"
         },
         {
             "Command": "No device command",
             "Description": "No description",
-            "Number": 7,
+            "Number": 172796418725399076826357043233681231510,
             "RoomName": "New Room"
         },
         {
             "Command": "No device command",
             "Description": "No description",
-            "Number": 8,
+            "Number": 173430254325174318381469281997082775190,
             "RoomName": "New Room"
         },
         {
             "Command": "No device command",
             "Description": "No description",
-            "Number": 9,
+            "Number": 237207766041139526457013168469569359510,
             "RoomName": "New Room"
         },
         {
             "Command": "No device command",
             "Description": "No description",
-            "Number": 10,
+            "Number": 237564812509199809550238729894395563670,
             "RoomName": "New Room"
         },
         {
             "Command": "No device command",
             "Description": "No description",
-            "Number": 11,
+            "Number": 237868642212780886430546083783220579990,
             "RoomName": "New Room"
         },
         {
             "Command": "No device command",
             "Description": "No description",
-            "Number": 12,
-            "RoomName": "New Room"
-        },
-        {
-            "Command": "No device command",
-            "Description": "No description",
-            "Number": 13,
-            "RoomName": "New Room"
-        },
-        {
-            "Command": "No device command",
-            "Description": "No description",
-            "Number": 14,
-            "RoomName": "New Room"
-        },
-        {
-            "Command": "No device command",
-            "Description": "No description",
-            "Number": 15,
-            "RoomName": "New Room"
-        },
-        {
-            "Command": "No device command",
-            "Description": "No description",
-            "Number": 16,
-            "RoomName": "New Room"
-        },
-        {
-            "Command": "No device command",
-            "Description": "No description",
-            "Number": 17,
-            "RoomName": "New Room"
-        },
-        {
-            "Command": "No device command",
-            "Description": "No description",
-            "Number": 18,
+            "Number": 238181853323085277351067889211204882070,
             "RoomName": "New Room"
         }
     ],
     "Connect": [
         {
             "Directory": "/user",
-            "Host": "192.168.2.29",
+            "Host": "",
             "Pass": "",
             "User": "crestron"
         }

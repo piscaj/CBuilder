@@ -423,7 +423,7 @@ class CLBottomToolbar(MDBottomAppBar):
 
     def addItem(self):
         itemAdded = f.addToFile()
-        f.readFile()
+        #f.readFile()
         if itemAdded:
             self.cList.add_widget(
                 ListItemWithEdit(id=str(f.numberOfItems()),

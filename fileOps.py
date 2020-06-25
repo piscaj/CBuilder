@@ -1,5 +1,6 @@
 import json
 import os
+import uuid
 
 
 class FileOperation:
@@ -31,7 +32,9 @@ class FileOperation:
     def addToFile(self):
         with open("config.json", "r") as read_file:
             obj = json.load(read_file)
-            objNum = len(obj["Config"])
+            #objNum = len(obj["Config"])
+            #objNum = objNum = len(obj["Config"])
+            objNum = int(uuid.uuid1())
             obj["Config"].append({
                 'Command': 'No device command',
                 'Description': 'No description',
@@ -58,7 +61,7 @@ class FileOperation:
         data['Config'].append({
             'Command': 'No device command',
             'Description': 'No local config file was found, so this file was created',
-            'Number': 0,
+            'Number': int(uuid.uuid1()),
             'RoomName': 'Room Name'
         })
         app_folder = os.path.dirname(os.path.abspath(__file__))
