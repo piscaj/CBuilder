@@ -57,7 +57,7 @@ class FileOperation:
         data['Config'] = []
         data['Config'].append({
             'Command': 'No device command',
-            'Description': 'No description',
+            'Description': 'No local config file was found, so this file was created',
             'Number': 0,
             'RoomName': 'Room Name'
         })
