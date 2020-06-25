@@ -104,7 +104,9 @@ class CLScreen(Screen):
 class FtpScreen(Screen,ThemableBehavior):
     dialogSave = None
     dialogUpload = None
+    dialogDownload = None
     dialogUploading = None
+    dialogDownloading = None
     dialogException = None
     
     def saveEdits(self,inst):
@@ -138,18 +140,44 @@ class FtpScreen(Screen,ThemableBehavior):
             self.dialogUploading.dismiss()
             self.show_exception(str(transfer))
     
+    def downloadConfig(self):
+        global fileData
+        data = fileData
+        for i in range(len(data["Connect"])):
+            _host = data["Connect"][i]["Host"]
+            _user = data["Connect"][i]["User"]
+            _pass = data["Connect"][i]["Pass"]
+            _path = data["Connect"][i]["Directory"]
+        
+        download = sftp.getFile(_host,_user,_pass,_path,"config.json")
+        if download == "Success":
+            self.dialogDownloading.dismiss()
+        else:
+            self.dialogDownloading.dismiss()
+            self.show_exception(str(download))
+    
     def startUpload(self):
         thistime = time.time() 
         while thistime + 2 > time.time(): # 5 seconds
             time.sleep(.5)
         self.uploadConfig()
         
+    def startDownload(self):
+        thistime = time.time() 
+        while thistime + 2 > time.time(): # 5 seconds
+            time.sleep(.5)
+        self.downloadConfig()
+        
     def closeSaveDialog(self, inst):
         self.dialogSave.dismiss()
     def closeUploadDialog(self, inst):
         self.dialogUpload.dismiss()
+    def closeDownloadDialog(self, inst):
+        self.dialogDownload.dismiss()
     def closeUploadingDialog(self, inst):
         self.dialogUploading.dismiss()
+    def closeDownloadingDialog(self, inst):
+        self.dialogDownloading.dismiss()
     def closeExceptionDialog(self, inst):
         self.dialogException.dismiss()
 
@@ -171,7 +199,6 @@ class FtpScreen(Screen,ThemableBehavior):
                 ],
             )
         self.dialogSave.open()
-    
     def show_confirmation_upload(self):
         if not self.dialogUpload:
             self.dialogUpload = MDDialog(
@@ -190,7 +217,24 @@ class FtpScreen(Screen,ThemableBehavior):
                 ],
             )
         self.dialogUpload.open()
-    
+    def show_confirmation_download(self):
+        if not self.dialogDownload:
+            self.dialogDownload = MDDialog(
+                title="Upload configuration file?",
+                size_hint=(None, None),
+                size=(600, 500),
+                type="alert",
+                text="This will transfer config.json to the remote path.",
+                buttons=[
+                    MDFlatButton(
+                        text="CANCEL", on_release=self.closeDownloadDialog
+                    ),
+                    MDFlatButton(
+                        text="ACCEPT", text_color=self.theme_cls.primary_color, on_release=self.showDownloadingDialog
+                    ),
+                ],
+            )
+        self.dialogDownload.open()
     def showUploadingDialog(self,inst):
         self.closeUploadDialog(inst)
         if not self.dialogUploading:
@@ -204,8 +248,23 @@ class FtpScreen(Screen,ThemableBehavior):
             )
         self.dialogUploading.open()
         if self.dialogUploading:
-            mythread = threading.Thread(target=self.startUpload)
-            mythread.start()
+            upload = threading.Thread(target=self.startUpload)
+            upload.start()
+    def showDownloadingDialog(self,inst):
+        self.closeDownloadDialog(inst)
+        if not self.dialogDownloading:
+            self.dialogDownloading = MDDialog(
+                title="Uploading configuration file?",
+                size_hint=(None, None),
+                size=(600, 500),
+                type="custom",
+                text="",
+                content_cls=Progress()
+            )
+        self.dialogDownloading.open()
+        if self.dialogDownloading:
+            download = threading.Thread(target=self.startDownload)
+            download.start()
     def show_exception(self,err):
         if not self.dialogException:
             self.dialogException = MDDialog(

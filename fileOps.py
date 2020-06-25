@@ -48,7 +48,7 @@ class FileOperation:
         data = {}
         data['Connect'] = []
         data['Connect'].append({
-            'Host': 'Processor IP',
+            'Host': '',
             'User': 'crestron',
             'Pass': '',
             'Directory': '/user'
