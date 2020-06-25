@@ -57,10 +57,7 @@ class ListItemDelete(IconLeftWidget):
                 size_hint=(None, None),
                 size=(600, 500),
                 type="alert",
-                #theme_text_color= "Custom",
-                #text_color= self.theme_cls.disabled_hint_text_color,
                 text=_name+" will permanintly be removed.",
-                # content_cls=ConfirmDelete(),
                 buttons=[
                     MDFlatButton(
                         text="CANCEL", on_release=self.closeDialog
@@ -70,7 +67,6 @@ class ListItemDelete(IconLeftWidget):
                     ),
                 ],
             )
-        self.dialog.set_normal_height()
         self.dialog.open()
 
     def on_release(self):
@@ -170,6 +166,7 @@ class FtpScreen(Screen, ThemableBehavior):
         download = sftp.getFile(_host, _user, _pass, _path, "config.json")
         if download == "Success":
             self.dialogDownloading.dismiss()
+            self.manager.updateRequest = True
         else:
             self.dialogDownloading.dismiss()
             self.show_exception(str(download))
@@ -332,7 +329,7 @@ class FtpScreen(Screen, ThemableBehavior):
 
 class EditScreen(Screen):
     #passedId = StringProperty()
-
+    dialog = None
     def on_enter(self):
         global fileData
         data = fileData
@@ -343,7 +340,7 @@ class EditScreen(Screen):
                 self.eCom.text = data["Config"][i]["Command"]
                 break
 
-    def saveEdits(self):
+    def saveEdits(self,inst):
         global fileData
         data = fileData
         for i in range(len(data["Config"])):
@@ -356,6 +353,29 @@ class EditScreen(Screen):
             file_write.write(json.dumps(data, sort_keys=True,
                                         indent=4, separators=(',', ': ')))
             self.manager.updateRequest = True
+            self.dialog.dismiss()
+
+    def closeDialog(self, inst):
+        self.dialog.dismiss()
+
+    def show_confirmation_dialog(self):
+        if not self.dialog:
+            self.dialog = MDDialog(
+                title="Save changes?",
+                size_hint=(None, None),
+                size=(600, 500),
+                type="alert",
+                text="This will update config.json.",
+                buttons=[
+                    MDFlatButton(
+                        text="CANCEL", on_release=self.closeDialog
+                    ),
+                    MDFlatButton(
+                        text="ACCEPT", on_release=self.saveEdits
+                    ),
+                ],
+            )
+        self.dialog.open()
 
 
 class SettingsScreen(Screen):

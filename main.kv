@@ -232,7 +232,7 @@ ManagerScreen:
             pos_hint:{"center_x": 0.5, "center_y": 0.5}
             increment_width: "75dp"
             text:"Save"
-            on_release: eScreen.saveEdits()
+            on_release: eScreen.show_confirmation_dialog()
         MDRaisedButton:
             id:eCancel
             pos_hint:{"center_x": 0.5, "center_y": 0.5}
