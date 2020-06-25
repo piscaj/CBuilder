@@ -46,7 +46,7 @@ class FileOperation:
             file_write.write(json.dumps(obj, sort_keys=True,
                                         indent=4, separators=(',', ': ')))
             #print("New item added to file...")
-            return True
+            return objNum
 
     def makeFile(self):
         data = {}

@@ -422,14 +422,14 @@ class CLBottomToolbar(MDBottomAppBar):
         self.cScreen.manager.current = 'v_screen'
 
     def addItem(self):
+        global fileData
         itemAdded = f.addToFile()
-        #f.readFile()
         if itemAdded:
             self.cList.add_widget(
-                ListItemWithEdit(id=str(f.numberOfItems()),
+                ListItemWithEdit(id=str(itemAdded),
                                  text="New Room", icon="minus-circle-outline", secondary_text="No description")
             )
-        self.cScreen.refresh()
+        fileData = f.readFile()
 
 
 class EditBottomToolbar(MDToolbar):
