@@ -1,6 +1,7 @@
 import json
 import os
 
+
 class FileOperation:
 
     def __init__(self):
@@ -60,7 +61,7 @@ class FileOperation:
             'Number': 0,
             'RoomName': 'Room Name'
         })
-        app_folder = os.path.dirname(os.path.abspath(__file__)) 
+        app_folder = os.path.dirname(os.path.abspath(__file__))
         with open(app_folder+'/config.json', 'w') as write_file:
             json.dump(data, write_file)
             print("New file added...")
@@ -74,8 +75,8 @@ class FileOperation:
                 file_data = json.load(read_file)
 
                 print("Decoded JSON Data From File")
-                #for key, value in file_data.items():
-                    #print(key, ":", value)
+                # for key, value in file_data.items():
+                #print(key, ":", value)
                 print("Done reading json file")
         except FileNotFoundError:
             print("File not found...")
@@ -83,4 +84,3 @@ class FileOperation:
             if succsess:
                 file_data = self.readFile()
         return file_data
-    
