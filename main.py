@@ -110,7 +110,11 @@ class CLScreen(Screen):
 
     def on_enter(self, *args):
         if self.transition_progress == 1.0:
-            self.refresh()
+           self.refresh()
+    def on_kv_post(self, base_widget):
+        global fileData
+        fileData = f.readFile()
+        self.refresh()
 
 
 class FtpScreen(Screen, ThemableBehavior):
@@ -239,11 +243,11 @@ class FtpScreen(Screen, ThemableBehavior):
     def show_confirmation_download(self):
         if not self.dialogDownload:
             self.dialogDownload = MDDialog(
-                title="Upload configuration file?",
+                title="Download configuration file?",
                 size_hint=(None, None),
                 size=(600, 500),
                 type="alert",
-                text="This will transfer config.json to the remote path.",
+                text="This will download the config.json from the remote path and overwrite the local copy on your device.",
                 buttons=[
                     MDFlatButton(
                         text="CANCEL", on_release=self.closeDownloadDialog
@@ -275,7 +279,7 @@ class FtpScreen(Screen, ThemableBehavior):
         self.closeDownloadDialog(inst)
         if not self.dialogDownloading:
             self.dialogDownloading = MDDialog(
-                title="Uploading configuration file?",
+                title="Downloading configuration file?",
                 size_hint=(None, None),
                 size=(600, 500),
                 type="custom",
@@ -420,14 +424,13 @@ class ManagerScreen(ScreenManager):
 class CBuilderApp(MDApp):
 
     def build(self):
-        #self.theme_cls.primary_palette = "Red"
         self.theme_cls.theme_style = "Light"
-        self.theme_cls.primary_palette = "Red"
+        self.theme_cls.primary_palette = "LightGreen"
+        #self.theme_cls.primary_hue = "300"
         return Builder.load_file("main.kv")
 
     def on_start(self):
-        global fileData
-        fileData = f.readFile()
+        pass
 
     def on_stop(self):
         print("CBuilder Closing....")

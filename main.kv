@@ -2,7 +2,7 @@
 #:import SlideTransition kivy.uix.screenmanager.SlideTransition
 #:import NoTransition kivy.uix.screenmanager.NoTransition
 ManagerScreen:
-    MenuScreen:
+    #MenuScreen:
     CLScreen:
     FtpScreen:
     EditScreen:
@@ -80,7 +80,7 @@ ManagerScreen:
     name:"f_screen"
     canvas:
         Color:
-            rgba: hex('#ffffff')
+            rgba: hex('#fffffff')
         RoundedRectangle:
             size: self.width, self.height
             pos: self.pos
@@ -89,7 +89,10 @@ ManagerScreen:
         id:fHost
         fScreen:fScreen
         hint_text: "Host"
+        helper_text: "enter a command string."
         size_hint: 0.5, None
+        helper_text: "enter processor host name or ip."
+        helper_text_mode: "on_focus"
         pos_hint:{"center_x": 0.5, "center_y": 0.9}
         multiline: False
     MDTextField:
@@ -97,6 +100,8 @@ ManagerScreen:
         fScreen:fScreen
         hint_text: "User"
         size_hint: 0.5, None
+        helper_text: "enter processor username."
+        helper_text_mode: "on_focus"
         multiline: False
         pos_hint:{"center_x": 0.5, "center_y": 0.7}
     MDTextField:
@@ -104,6 +109,8 @@ ManagerScreen:
         fScreen:fScreen
         hint_text: "Pass"
         size_hint: 0.5, None
+        helper_text: "enter processor password."
+        helper_text_mode: "on_focus"
         multiline: False
         pos_hint:{"center_x": 0.5, "center_y": 0.5}
     MDTextField:
@@ -111,6 +118,8 @@ ManagerScreen:
         fScreen:fScreen
         hint_text: "Path"
         size_hint: 0.5, None
+        helper_text: "enter directory to put/get config."
+        helper_text_mode: "on_focus"
         multiline: False
         pos_hint:{"center_x": 0.5, "center_y": 0.3}   
     GridLayout:
@@ -185,6 +194,8 @@ ManagerScreen:
         eScreen:eScreen
         hint_text: "Room Name"
         size_hint: 0.5, None
+        helper_text: "enter room name or friendly name."
+        helper_text_mode: "on_focus"
         pos_hint:{"center_x": 0.5, "center_y": 0.85}
         multiline: False
     MDTextField:
@@ -192,6 +203,8 @@ ManagerScreen:
         eScreen:eScreen
         hint_text: "Description"
         size_hint: 0.5, None
+        helper_text: "enter a brief description."
+        helper_text_mode: "on_focus"
         multiline: False
         pos_hint:{"center_x": 0.5, "center_y": 0.65}
     MDTextField:
@@ -199,6 +212,8 @@ ManagerScreen:
         eScreen:eScreen
         hint_text: "Command"
         size_hint: 0.5, None
+        helper_text: "enter a command string."
+        helper_text_mode: "on_focus"
         multiline: False
         pos_hint:{"center_x": 0.5, "center_y": 0.45}    
     MDGridLayout:
@@ -245,6 +260,7 @@ ManagerScreen:
         user_font_size: "36sp"
         pos_hint:{"center_x": 0.93, "center_y": 0.07}
         increment_width: "75dp"
+        opposite_colors:True
         text:"Exit"
         on_release: sScreen.goBack()
 <ViewCodeScreen>:

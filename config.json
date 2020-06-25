@@ -4,7 +4,7 @@
             "Command": "1*3%6*4$5*2!7*4%",
             "Description": "NVX routing for console 1",
             "Number": 8,
-            "RoomName": "Room 247"
+            "RoomName": "Room 242"
         },
         {
             "Command": "Add device command",
@@ -22,12 +22,6 @@
             "Command": "Add device command",
             "Description": "Add description",
             "Number": 11,
-            "RoomName": "New Room"
-        },
-        {
-            "Command": "Add device command",
-            "Description": "Add description",
-            "Number": 12,
             "RoomName": "New Room"
         },
         {
@@ -106,6 +100,18 @@
             "Command": "No device command",
             "Description": "No description",
             "Number": 17,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Number": 18,
+            "RoomName": "New Room"
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Number": 19,
             "RoomName": "New Room"
         }
     ],
