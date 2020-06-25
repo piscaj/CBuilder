@@ -110,7 +110,9 @@ class CLScreen(Screen):
 
     def on_enter(self, *args):
         if self.transition_progress == 1.0:
-           self.refresh()
+            if self.manager.updateRequest:
+                self.manager.updateRequest = False
+                self.refresh()
     def on_kv_post(self, base_widget):
         global fileData
         fileData = f.readFile()
@@ -329,7 +331,7 @@ class FtpScreen(Screen, ThemableBehavior):
 
 
 class EditScreen(Screen):
-    passedId = StringProperty()
+    #passedId = StringProperty()
 
     def on_enter(self):
         global fileData
@@ -353,6 +355,7 @@ class EditScreen(Screen):
         with open("config.json", "w") as file_write:
             file_write.write(json.dumps(data, sort_keys=True,
                                         indent=4, separators=(',', ': ')))
+            self.manager.updateRequest = True
 
 
 class SettingsScreen(Screen):
@@ -419,6 +422,7 @@ class EditBottomToolbar(MDToolbar):
 
 class ManagerScreen(ScreenManager):
     statedata = ObjectProperty()
+    updateRequest = ObjectProperty()
 
 
 class CBuilderApp(MDApp):
