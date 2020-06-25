@@ -2,7 +2,8 @@ import os
 import json
 import kivy
 from kivy.clock import Clock
-import time, threading
+import time
+import threading
 from kivymd.utils import asynckivy
 from kivy.uix.screenmanager import ScreenManager, Screen, FadeTransition, SlideTransition, CardTransition, NoTransition
 from kivy.lang import Builder
@@ -25,14 +26,19 @@ Window.softinput_mode = "below_target"
 
 f = FileOperation()
 fileData = {}
-sftp =  FtpOperation()
+sftp = FtpOperation()
 
 app_folder = os.path.dirname(os.path.abspath(__file__))
 
+
 class Progress(FloatLayout):
     pass
+
+
 class CList(MDList):
     pass
+
+
 class ListItemDelete(IconLeftWidget):
     dialog = None
 
@@ -69,8 +75,12 @@ class ListItemDelete(IconLeftWidget):
 
     def on_release(self):
         self.show_confirmation_dialog(self.list_item.text)
+
+
 class MenuScreen(Screen):
     pass
+
+
 class CLScreen(Screen):
     def updateList(self):
         async def updateList():
@@ -101,15 +111,17 @@ class CLScreen(Screen):
     def on_enter(self, *args):
         if self.transition_progress == 1.0:
             self.refresh()
-class FtpScreen(Screen,ThemableBehavior):
+
+
+class FtpScreen(Screen, ThemableBehavior):
     dialogSave = None
     dialogUpload = None
     dialogDownload = None
     dialogUploading = None
     dialogDownloading = None
     dialogException = None
-    
-    def saveEdits(self,inst):
+
+    def saveEdits(self, inst):
         global fileData
         data = fileData
         for i in range(len(data["Connect"])):
@@ -118,12 +130,12 @@ class FtpScreen(Screen,ThemableBehavior):
             data["Connect"][i]["Pass"] = self.fPass.text
             data["Connect"][i]["Directory"] = self.fPath.text
             break
-        
+
         with open("config.json", "w") as file_write:
             file_write.write(json.dumps(data, sort_keys=True,
                                         indent=4, separators=(',', ': ')))
         self.dialogSave.dismiss()
-    
+
     def uploadConfig(self):
         global fileData
         data = fileData
@@ -132,14 +144,14 @@ class FtpScreen(Screen,ThemableBehavior):
             _user = data["Connect"][i]["User"]
             _pass = data["Connect"][i]["Pass"]
             _path = data["Connect"][i]["Directory"]
-        
-        transfer = sftp.writeFile(_host,_user,_pass,_path,"config.json")
+
+        transfer = sftp.writeFile(_host, _user, _pass, _path, "config.json")
         if transfer == "Success":
             self.dialogUploading.dismiss()
         else:
             self.dialogUploading.dismiss()
             self.show_exception(str(transfer))
-    
+
     def downloadConfig(self):
         global fileData
         data = fileData
@@ -148,36 +160,41 @@ class FtpScreen(Screen,ThemableBehavior):
             _user = data["Connect"][i]["User"]
             _pass = data["Connect"][i]["Pass"]
             _path = data["Connect"][i]["Directory"]
-        
-        download = sftp.getFile(_host,_user,_pass,_path,"config.json")
+
+        download = sftp.getFile(_host, _user, _pass, _path, "config.json")
         if download == "Success":
             self.dialogDownloading.dismiss()
         else:
             self.dialogDownloading.dismiss()
             self.show_exception(str(download))
-    
+
     def startUpload(self):
-        thistime = time.time() 
-        while thistime + 2 > time.time(): # 5 seconds
+        thistime = time.time()
+        while thistime + 2 > time.time():  # 5 seconds
             time.sleep(.5)
         self.uploadConfig()
-        
+
     def startDownload(self):
-        thistime = time.time() 
-        while thistime + 2 > time.time(): # 5 seconds
+        thistime = time.time()
+        while thistime + 2 > time.time():  # 5 seconds
             time.sleep(.5)
         self.downloadConfig()
-        
+
     def closeSaveDialog(self, inst):
         self.dialogSave.dismiss()
+
     def closeUploadDialog(self, inst):
         self.dialogUpload.dismiss()
+
     def closeDownloadDialog(self, inst):
         self.dialogDownload.dismiss()
+
     def closeUploadingDialog(self, inst):
         self.dialogUploading.dismiss()
+
     def closeDownloadingDialog(self, inst):
         self.dialogDownloading.dismiss()
+
     def closeExceptionDialog(self, inst):
         self.dialogException.dismiss()
 
@@ -199,6 +216,7 @@ class FtpScreen(Screen,ThemableBehavior):
                 ],
             )
         self.dialogSave.open()
+
     def show_confirmation_upload(self):
         if not self.dialogUpload:
             self.dialogUpload = MDDialog(
@@ -217,6 +235,7 @@ class FtpScreen(Screen,ThemableBehavior):
                 ],
             )
         self.dialogUpload.open()
+
     def show_confirmation_download(self):
         if not self.dialogDownload:
             self.dialogDownload = MDDialog(
@@ -235,7 +254,8 @@ class FtpScreen(Screen,ThemableBehavior):
                 ],
             )
         self.dialogDownload.open()
-    def showUploadingDialog(self,inst):
+
+    def showUploadingDialog(self, inst):
         self.closeUploadDialog(inst)
         if not self.dialogUploading:
             self.dialogUploading = MDDialog(
@@ -250,7 +270,8 @@ class FtpScreen(Screen,ThemableBehavior):
         if self.dialogUploading:
             upload = threading.Thread(target=self.startUpload)
             upload.start()
-    def showDownloadingDialog(self,inst):
+
+    def showDownloadingDialog(self, inst):
         self.closeDownloadDialog(inst)
         if not self.dialogDownloading:
             self.dialogDownloading = MDDialog(
@@ -265,7 +286,8 @@ class FtpScreen(Screen,ThemableBehavior):
         if self.dialogDownloading:
             download = threading.Thread(target=self.startDownload)
             download.start()
-    def show_exception(self,err):
+
+    def show_exception(self, err):
         if not self.dialogException:
             self.dialogException = MDDialog(
                 title="Ooops!?",
@@ -280,7 +302,7 @@ class FtpScreen(Screen,ThemableBehavior):
                 ],
             )
         self.dialogException.open()
-    
+
     def on_enter(self):
         global fileData
         data = fileData
@@ -290,53 +312,62 @@ class FtpScreen(Screen,ThemableBehavior):
             self.fPass.text = data["Connect"][i]["Pass"]
             self.fPath.text = data["Connect"][i]["Directory"]
             break
-                    
+
     def save(self):
         self.show_confirmation_save()
-    
+
     def upload(self):
         self.show_confirmation_upload()
-        
+
     def goBack(self):
         self.manager.transition = NoTransition()
-        self.manager.current = 'cl_screen' 
+        self.manager.current = 'cl_screen'
+
+
 class EditScreen(Screen):
     passedId = StringProperty()
-    
+
     def on_enter(self):
         global fileData
         data = fileData
         for i in range(len(data["Config"])):
-                if data["Config"][i]["Number"] == int(self.manager.statedata):
-                    self.eName.text = data["Config"][i]["RoomName"]
-                    self.eDes.text = data["Config"][i]["Description"]
-                    self.eCom.text = data["Config"][i]["Command"]
-                    break
-                
+            if data["Config"][i]["Number"] == int(self.manager.statedata):
+                self.eName.text = data["Config"][i]["RoomName"]
+                self.eDes.text = data["Config"][i]["Description"]
+                self.eCom.text = data["Config"][i]["Command"]
+                break
+
     def saveEdits(self):
         global fileData
         data = fileData
         for i in range(len(data["Config"])):
-                if data["Config"][i]["Number"] == int(self.manager.statedata):
-                    data["Config"][i]["RoomName"] = self.eName.text
-                    data["Config"][i]["Description"] = self.eDes.text
-                    data["Config"][i]["Command"] = self.eCom.text
-                    break
+            if data["Config"][i]["Number"] == int(self.manager.statedata):
+                data["Config"][i]["RoomName"] = self.eName.text
+                data["Config"][i]["Description"] = self.eDes.text
+                data["Config"][i]["Command"] = self.eCom.text
+                break
         with open("config.json", "w") as file_write:
             file_write.write(json.dumps(data, sort_keys=True,
-                                        indent=4, separators=(',', ': ')))            
+                                        indent=4, separators=(',', ': ')))
+
+
 class SettingsScreen(Screen):
     def goBack(self):
         self.manager.transition = NoTransition()
         self.manager.current = 'cl_screen'
+
+
 class ViewCodeScreen(Screen):
     def on_enter(self):
         global fileData
         data = fileData
         self.vLabel.text = json.dumps(data, indent=4, sort_keys=True)
+
     def goBack(self):
         self.manager.transition = NoTransition()
-        self.manager.current = 'cl_screen'  
+        self.manager.current = 'cl_screen'
+
+
 class ListItemWithEdit(TwoLineIconListItem):
     icon = StringProperty()
 
@@ -346,17 +377,19 @@ class ListItemWithEdit(TwoLineIconListItem):
             duration=0.6, direction="left")
         self.parent.cScreen.manager.current = 'e_screen'
         self.parent.cScreen.manager.statedata = self.id
+
+
 class CLBottomToolbar(MDBottomAppBar):
     def goFTP(self):
         self.cScreen.manager.transition = CardTransition(
             duration=0.6, direction="up")
         self.cScreen.manager.current = 'f_screen'
-    
+
     def goSettings(self):
         self.cScreen.manager.transition = CardTransition(
             duration=0.6, direction="up")
         self.cScreen.manager.current = 's_screen'
-    
+
     def goViewCode(self):
         self.cScreen.manager.transition = CardTransition(
             duration=0.6, direction="up")
@@ -371,13 +404,19 @@ class CLBottomToolbar(MDBottomAppBar):
                                  text="New Room", icon="minus-circle-outline", secondary_text="No description")
             )
         self.cScreen.refresh()
+
+
 class EditBottomToolbar(MDToolbar):
     def goBack(self):
         self.eScreen.manager.transition = SlideTransition(
             duration=0.6, direction="right")
         self.eScreen.manager.current = 'cl_screen'
+
+
 class ManagerScreen(ScreenManager):
     statedata = ObjectProperty()
+
+
 class CBuilderApp(MDApp):
 
     def build(self):
@@ -392,6 +431,7 @@ class CBuilderApp(MDApp):
 
     def on_stop(self):
         print("CBuilder Closing....")
+
 
 if __name__ == "__main__":
     CBuilderApp().run()
