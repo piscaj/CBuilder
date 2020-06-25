@@ -327,7 +327,7 @@ class FtpScreen(Screen, ThemableBehavior):
         self.manager.current = 'cl_screen'
 
 
-class EditScreen(Screen):
+class EditScreen(Screen,ThemableBehavior):
     #passedId = StringProperty()
     dialog = None
     def on_enter(self):
@@ -371,7 +371,7 @@ class EditScreen(Screen):
                         text="CANCEL", on_release=self.closeDialog
                     ),
                     MDFlatButton(
-                        text="ACCEPT", on_release=self.saveEdits
+                        text="ACCEPT", text_color=self.theme_cls.primary_color, on_release=self.saveEdits
                     ),
                 ],
             )
