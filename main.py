@@ -326,7 +326,7 @@ class FtpScreen(Screen, ThemableBehavior):
         self.show_confirmation_upload()
 
     def goBack(self):
-        self.manager.transition = NoTransition()
+        self.manager.transition =  CardTransition(duration=0.5, direction="down", mode="pop")
         self.manager.current = 'cl_screen'
 
 
@@ -360,7 +360,7 @@ class EditScreen(Screen):
 
 class SettingsScreen(Screen):
     def goBack(self):
-        self.manager.transition = NoTransition()
+        self.manager.transition = CardTransition(duration=0.5, direction="down", mode="pop")
         self.manager.current = 'cl_screen'
 
 
@@ -371,7 +371,7 @@ class ViewCodeScreen(Screen):
         self.vLabel.text = json.dumps(data, indent=4, sort_keys=True)
 
     def goBack(self):
-        self.manager.transition = NoTransition()
+        self.manager.transition =  CardTransition(duration=0.5, direction="down", mode="pop")
         self.manager.current = 'cl_screen'
 
 

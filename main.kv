@@ -1,6 +1,7 @@
 #:import hex kivy.utils.get_color_from_hex
 #:import SlideTransition kivy.uix.screenmanager.SlideTransition
 #:import NoTransition kivy.uix.screenmanager.NoTransition
+
 ManagerScreen:
     #MenuScreen:
     CLScreen:
@@ -80,7 +81,7 @@ ManagerScreen:
     name:"f_screen"
     canvas:
         Color:
-            rgba: hex('#fffffff')
+            rgba: hex('#ffffff')
         RoundedRectangle:
             size: self.width, self.height
             pos: self.pos
@@ -164,7 +165,7 @@ ManagerScreen:
     MDIconButton:
         id:fClose
         fScreen:fScreen
-        icon: "close-circle-outline"
+        icon: "close"
         user_font_size: "36sp"
         pos_hint:{"center_x": 0.93, "center_y": 0.07}
         increment_width: "75dp"
@@ -256,7 +257,7 @@ ManagerScreen:
     MDIconButton:
         id:sClose
         sScreen:sScreen
-        icon: "close-circle-outline"
+        icon: "close"
         user_font_size: "36sp"
         pos_hint:{"center_x": 0.93, "center_y": 0.07}
         increment_width: "75dp"
@@ -297,7 +298,7 @@ ManagerScreen:
     MDIconButton:
         id:vClose
         vScreen:vScreen
-        icon: "close-circle-outline"
+        icon: "close"
         opposite_colors:True
         user_font_size: "36sp"
         pos_hint:{"center_x": 0.93, "center_y": 0.07}
