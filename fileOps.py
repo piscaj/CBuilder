@@ -18,9 +18,9 @@ class FileOperation:
             obj = json.load(read_file)
             #print("Searching", _key, _value)
             for i in range(len(obj["Config"])):
-                print(i)
+                #print(i)
                 if obj["Config"][i][_key] == int(_value):
-                    print("Found the entry!!!!!!")
+                    #print("Found the entry!!!!!!")
                     obj["Config"].pop(i)
                     break
 
@@ -42,7 +42,7 @@ class FileOperation:
         with open("config.json", "w") as file_write:
             file_write.write(json.dumps(obj, sort_keys=True,
                                         indent=4, separators=(',', ': ')))
-            print("New item added to file...")
+            #print("New item added to file...")
             return True
 
     def makeFile(self):
@@ -64,22 +64,22 @@ class FileOperation:
         app_folder = os.path.dirname(os.path.abspath(__file__))
         with open(app_folder+'/config.json', 'w') as write_file:
             json.dump(data, write_file)
-            print("New file added...")
+            #print("New file added...")
             return True
 
     def readFile(self):
         try:
-            print("Trying Reading JSON file")
+            #print("Trying Reading JSON file")
             with open("config.json", "r") as read_file:
-                print("Converting JSON encoded data into Python dictionary")
+                #print("Converting JSON encoded data into Python dictionary")
                 file_data = json.load(read_file)
 
-                print("Decoded JSON Data From File")
+                #print("Decoded JSON Data From File")
                 # for key, value in file_data.items():
                 #print(key, ":", value)
-                print("Done reading json file")
+                #print("Done reading json file")
         except FileNotFoundError:
-            print("File not found...")
+            #print("File not found...")
             succsess = self.makeFile()
             if succsess:
                 file_data = self.readFile()

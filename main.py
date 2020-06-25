@@ -379,7 +379,6 @@ class ListItemWithEdit(TwoLineIconListItem):
     icon = StringProperty()
 
     def on_release(self):
-        print(self.text, self.id)
         self.parent.cScreen.manager.transition = SlideTransition(
             duration=0.6, direction="left")
         self.parent.cScreen.manager.current = 'e_screen'
