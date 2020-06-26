@@ -39,7 +39,7 @@ class FileOperation:
                 'Command': 'No device command',
                 'Description': 'No description',
                 'Number': objNum,
-                'RoomName': 'New Room'
+                'Name': 'My new command'
             })
 
         with open("config.json", "w") as file_write:
@@ -62,7 +62,7 @@ class FileOperation:
             'Command': 'No device command',
             'Description': 'No local config file was found, so this file was created',
             'Number': int(uuid.uuid1()),
-            'RoomName': 'Room Name'
+            'Name': 'My new command'
         })
         app_folder = os.path.dirname(os.path.abspath(__file__))
         with open(app_folder+'/config.json', 'w') as write_file:

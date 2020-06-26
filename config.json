@@ -2,39 +2,45 @@
     "Config": [
         {
             "Command": "No device command",
-            "Description": "No description",
-            "Number": 170551170243344089478006849354230320790,
-            "RoomName": "New "
+            "Description": "No local config file was found, so this file was created",
+            "Name": "My new command",
+            "Number": 121509724699829919927666628305317973654
         },
         {
             "Command": "No device command",
             "Description": "No description",
-            "Number": 171014580519579772444451743532382604950,
-            "RoomName": "New R"
+            "Name": "My new command",
+            "Number": 310943915836647388923101731159509225110
         },
         {
             "Command": "No device command",
             "Description": "No description",
-            "Number": 172215181910435430222329782363468254870,
-            "RoomName": "N"
+            "Name": "My new command",
+            "Number": 311234453431403447675491016179786370710
         },
         {
             "Command": "No device command",
             "Description": "No description",
-            "Number": 175811698078528387198551965245140553366,
-            "RoomName": "New Room"
+            "Name": "My new command",
+            "Number": 311511842320308639118413276646065753750
         },
         {
             "Command": "No device command",
             "Description": "No description",
-            "Number": 182717872017359408402843395210500558486,
-            "RoomName": "New Room"
+            "Name": "My new command",
+            "Number": 63700649838625385622166908920086318742
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Name": "My new command",
+            "Number": 64043989042289075842345411306064891542
         }
     ],
     "Connect": [
         {
             "Directory": "/user",
-            "Host": "",
+            "Host": "192.168.2.29",
             "Pass": "",
             "User": "crestron"
         }

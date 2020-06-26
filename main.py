@@ -86,7 +86,7 @@ class CLScreen(Screen):
                 await asynckivy.sleep(0)
                 self.manager.get_screen('cl_screen').cList.add_widget(
                     ListItemWithEdit(id=str(name.get("Number")), text=name.get(
-                        "RoomName"), icon="minus-circle-outline", secondary_text=name.get(
+                        "Name"), icon="minus-circle-outline", secondary_text=name.get(
                         "Description"))
                 )
         asynckivy.start(updateList())
@@ -334,7 +334,7 @@ class EditScreen(Screen,ThemableBehavior):
         data = fileData
         for i in range(len(data["Config"])):
             if data["Config"][i]["Number"] == int(self.manager.statedata):
-                self.eName.text = data["Config"][i]["RoomName"]
+                self.eName.text = data["Config"][i]["Name"]
                 self.eDes.text = data["Config"][i]["Description"]
                 self.eCom.text = data["Config"][i]["Command"]
                 break
@@ -344,7 +344,7 @@ class EditScreen(Screen,ThemableBehavior):
         data = fileData
         for i in range(len(data["Config"])):
             if data["Config"][i]["Number"] == int(self.manager.statedata):
-                data["Config"][i]["RoomName"] = self.eName.text
+                data["Config"][i]["Name"] = self.eName.text
                 data["Config"][i]["Description"] = self.eDes.text
                 data["Config"][i]["Command"] = self.eCom.text
                 break
@@ -426,7 +426,7 @@ class CLBottomToolbar(MDBottomAppBar):
         if itemAdded:
             self.cList.add_widget(
                 ListItemWithEdit(id=str(itemAdded),
-                                 text="New Room", icon="minus-circle-outline", secondary_text="No description")
+                                 text="My new command", icon="minus-circle-outline", secondary_text="No description")
             )
         fileData = f.readFile()
 
