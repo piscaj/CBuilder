@@ -30,7 +30,6 @@ sftp = FtpOperation()
 
 app_folder = os.path.dirname(os.path.abspath(__file__))
 
-
 class Progress(FloatLayout):
     pass
 
