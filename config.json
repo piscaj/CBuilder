@@ -1,1 +1,30 @@
-{"Connect": [{"Host": "", "User": "crestron", "Pass": "", "Directory": "/user"}], "Config": [{"Command": "No device command", "Description": "No local config file was found, so this file was created", "Number": 2192836189291154, "Name": "My new command"}]}
+{
+    "Config": [
+        {
+            "Command": "No device command",
+            "Description": "No local config file was found, so this file was created",
+            "Name": "My new command",
+            "Number": 2192836189291154
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Name": "My new command",
+            "Number": 9945608314850863
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Name": "My new command",
+            "Number": 5726639002267954
+        }
+    ],
+    "Connect": [
+        {
+            "Directory": "/user",
+            "Host": "",
+            "Pass": "",
+            "User": "crestron"
+        }
+    ]
+}

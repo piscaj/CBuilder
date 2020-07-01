@@ -1,5 +1,6 @@
 #:import hex kivy.utils.get_color_from_hex
 #:import SlideTransition kivy.uix.screenmanager.SlideTransition
+#:import CardTransition kivy.uix.screenmanager.CardTransition
 #:import NoTransition kivy.uix.screenmanager.NoTransition
 
 ManagerScreen:
@@ -239,7 +240,7 @@ ManagerScreen:
             increment_width: "75dp"
             text:"Cancel"
             on_release:
-                app.root.transition = SlideTransition( duration=0.6, direction="right")
+                app.root.transition = CardTransition( duration=0.6, direction="right", mode="pop")
                 app.root.current = 'cl_screen'
         Widget:
         

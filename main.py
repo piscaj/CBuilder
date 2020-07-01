@@ -42,8 +42,10 @@ class ListItemDelete(IconLeftWidget):
     dialog = None
 
     def deleteItem(self, inst):
+        global fileData
         f.deleteFromFile("Number", self.list_item.id)
         self.list_item.parent.remove_widget(self.list_item)
+        fileData = f.readFile()
         self.dialog.dismiss()
 
     def closeDialog(self, inst):
@@ -398,10 +400,10 @@ class ListItemWithEdit(TwoLineIconListItem):
     icon = StringProperty()
 
     def on_release(self):
-        self.parent.cScreen.manager.transition = SlideTransition(
-            duration=0.6, direction="left")
-        self.parent.cScreen.manager.current = 'e_screen'
         self.parent.cScreen.manager.statedata = self.id
+        self.parent.cScreen.manager.transition = CardTransition(
+            duration=0.5, direction="left", mode="push")
+        self.parent.cScreen.manager.current = 'e_screen'
 
 
 class CLBottomToolbar(MDBottomAppBar):
@@ -433,8 +435,8 @@ class CLBottomToolbar(MDBottomAppBar):
 
 class EditBottomToolbar(MDToolbar):
     def goBack(self):
-        self.eScreen.manager.transition = SlideTransition(
-            duration=0.6, direction="right")
+        self.eScreen.manager.transition = CardTransition(
+            duration=0.5, direction="right", mode="pop")
         self.eScreen.manager.current = 'cl_screen'
 
 
