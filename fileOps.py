@@ -1,7 +1,7 @@
 import json
 import os
 import sys
-import uuid
+import random
 
 class FileOperation:
 
@@ -34,7 +34,7 @@ class FileOperation:
             obj = json.load(read_file)
             #objNum = len(obj["Config"])
             #objNum = objNum = len(obj["Config"])
-            objNum = int(str(uuid.uuid4().int)[-16:])
+            objNum = random.randint(0, 65535)
             obj["Config"].append({
                 'Command': 'No device command',
                 'Description': 'No description',
@@ -61,7 +61,7 @@ class FileOperation:
         data['Config'].append({
             'Command': 'No device command',
             'Description': 'No local config file was found, so this file was created',
-            'Number': int(str(uuid.uuid4().int)[-16:]),
+            'Number': random.randint(0, 65535),
             'Name': 'My new command'
         })
         app_folder = os.path.dirname(os.path.abspath(__file__))

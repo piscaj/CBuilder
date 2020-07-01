@@ -4,19 +4,25 @@
             "Command": "No device command",
             "Description": "No local config file was found, so this file was created",
             "Name": "My new command",
-            "Number": 2192836189291154
+            "Number": 42768
         },
         {
             "Command": "No device command",
             "Description": "No description",
             "Name": "My new command",
-            "Number": 9945608314850863
+            "Number": 59861
         },
         {
             "Command": "No device command",
             "Description": "No description",
             "Name": "My new command",
-            "Number": 5726639002267954
+            "Number": 47781
+        },
+        {
+            "Command": "No device command",
+            "Description": "No description",
+            "Name": "My new command",
+            "Number": 47029
         }
     ],
     "Connect": [
