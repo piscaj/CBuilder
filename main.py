@@ -13,13 +13,14 @@ from kivymd.app import MDApp
 from kivymd.uix.dialog import MDDialog
 from kivy.uix.floatlayout import FloatLayout
 from kivymd.theming import ThemableBehavior
-from kivymd.uix.list import TwoLineIconListItem, IconLeftWidget, IRightBodyTouch, MDList
+from kivymd.uix.list import TwoLineAvatarIconListItem, IconLeftWidget,IRightBodyTouch,IconRightWidget, MDList
 from kivymd.uix.selectioncontrol import MDCheckbox
 from kivymd.uix.button import MDFloatingActionButtonSpeedDial, MDFlatButton, MDRaisedButton
 from fileOps import FileOperation
 from ftpOps import FtpOperation
 from kivymd.icon_definitions import md_icons
 from kivy.core.window import Window
+from kivymd.uix.card import MDCardSwipe
 
 Window.keyboard_anim_args = {'d': .2, 't': 'in_out_expo'}
 Window.softinput_mode = "below_target"
@@ -37,6 +38,41 @@ class Progress(FloatLayout):
 class CList(MDList):
     pass
 
+
+class ListItemCopy(IconRightWidget):
+    dialog = None
+
+    def deleteItem(self, inst):
+        global fileData
+        f.deleteFromFile("Number", self.list_item.id)
+        self.list_item.parent.remove_widget(self.list_item)
+        fileData = f.readFile()
+        self.dialog.dismiss()
+
+    def closeDialog(self, inst):
+        self.dialog.dismiss()
+    
+    def show_confirmation_dialog(self, _name):
+        if not self.dialog:
+            self.dialog = MDDialog(
+                title="Make another like this?",
+                size_hint=(None, None),
+                size=(600, 500),
+                type="alert",
+                text=_name+" command will be duplicated.",
+                buttons=[
+                    MDFlatButton(
+                        text="CANCEL", on_release=self.closeDialog
+                    ),
+                    MDFlatButton(
+                        text="ACCEPT", text_color=self.theme_cls.primary_color, on_release=self.deleteItem
+                    ),
+                ],
+            )
+        self.dialog.open()
+
+    def on_release(self):
+        self.show_confirmation_dialog(self.list_item.text)
 
 class ListItemDelete(IconLeftWidget):
     dialog = None
@@ -88,7 +124,7 @@ class CLScreen(Screen):
                 await asynckivy.sleep(0)
                 self.manager.get_screen('cl_screen').cList.add_widget(
                     ListItemWithEdit(id=str(name.get("Number")), text=name.get(
-                        "Name"), icon="minus-circle-outline", secondary_text=name.get(
+                        "Name"), iconL="trash-can-outline",iconR="clipboard-plus-outline", secondary_text=name.get(
                         "Description"))
                 )
         asynckivy.start(updateList())
@@ -396,8 +432,9 @@ class ViewCodeScreen(Screen):
         self.manager.current = 'cl_screen'
 
 
-class ListItemWithEdit(TwoLineIconListItem):
-    icon = StringProperty()
+class ListItemWithEdit(TwoLineAvatarIconListItem):
+    iconL = StringProperty()
+    iconR = StringProperty()
 
     def on_release(self):
         self.parent.cScreen.manager.statedata = self.id
@@ -428,7 +465,7 @@ class CLBottomToolbar(MDBottomAppBar):
         if itemAdded:
             self.cList.add_widget(
                 ListItemWithEdit(id=str(itemAdded),
-                                 text="My new command", icon="minus-circle-outline", secondary_text="No description")
+                                 text="My new command", iconL="minus", iconR="plus", secondary_text="No description")
             )
         fileData = f.readFile()
 
@@ -449,7 +486,7 @@ class CBuilderApp(MDApp):
 
     def build(self):
         self.theme_cls.theme_style = "Light"
-        self.theme_cls.primary_palette = "LightGreen"
+        self.theme_cls.primary_palette = "Lime"
         #self.theme_cls.primary_hue = "300"
         return Builder.load_file("main.kv")
 

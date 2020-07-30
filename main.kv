@@ -1,4 +1,5 @@
 #:import hex kivy.utils.get_color_from_hex
+#:import colors kivymd.color_definitions.colors
 #:import SlideTransition kivy.uix.screenmanager.SlideTransition
 #:import CardTransition kivy.uix.screenmanager.CardTransition
 #:import NoTransition kivy.uix.screenmanager.NoTransition
@@ -13,10 +14,18 @@ ManagerScreen:
 <ListItemWithEdit>:
     id:list_item
     icon_left:icon_left
+    #icon_right:icon_right
+    bg_color: hex(colors['Gray']['500'])
+    radius: [25, 0, 0, 0]
+    ripple_color: (0.3, 0.1, 0.9, 1.0)
     ListItemDelete:
         id:icon_left
         list_item:list_item
-        icon: root.icon
+        icon: root.iconL
+    ListItemCopy:
+        id:icon_right
+        list_item:list_item
+        icon: root.iconR
 
 <Progress>:
     orientation: "vertical"
@@ -42,13 +51,13 @@ ManagerScreen:
     name:"cl_screen"
     cList:cList
     cScroll:cScroll
-    canvas:
-        Color:
-            rgba: hex('#ffffff')
-        RoundedRectangle:
-            size: self.width, self.height
-            pos: self.pos
-            radius: [0]
+    #canvas:
+    #    Color:
+    #        rgba: hex('#ffffff')
+    #    RoundedRectangle:
+    #        size: self.width, self.height
+    #        pos: self.pos
+    #        radius: [0]
     MDScrollViewRefreshLayout:
         id:cScroll
         refresh_callback: root.refresh
@@ -60,6 +69,8 @@ ManagerScreen:
             id:cList
             cScreen:cScreen
             cScroll:cScroll
+            #padding:10
+            spacing:10
     CLBottomToolbar:
         id: c_bottombar
         cScreen:cScreen
@@ -67,6 +78,7 @@ ManagerScreen:
         MDToolbar:
             id:c_toolbar
             c_bottombar:c_bottombar
+    
             title: "CBuilder"
             icon: "plus"
             type: "bottom"
@@ -179,13 +191,13 @@ ManagerScreen:
     eDes:eDes
     eCom:eCom
     name:"e_screen"
-    canvas:
-        Color:
-            rgba: hex('#ffffff')
-        RoundedRectangle:
-            size: self.width, self.height
-            pos: self.pos
-            radius: [0]
+    #canvas:
+    #    Color:
+    #        rgba: hex('#ffffff')
+    #    RoundedRectangle:
+    #        size: self.width, self.height
+    #        pos: self.pos
+    #        radius: [0]
     EditBottomToolbar:
         id:eBottombar
         eScreen:eScreen
