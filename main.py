@@ -42,10 +42,11 @@ class CList(MDList):
 class ListItemCopy(IconRightWidget):
     dialog = None
 
-    def deleteItem(self, inst):
+    def copyItem(self, inst):
         global fileData
-        f.deleteFromFile("Number", self.list_item.id)
-        self.list_item.parent.remove_widget(self.list_item)
+        f.copyFromFile("Number", self.list_item.id)
+        #self.list_item.parent.remove_widget(self.list_item)
+        
         fileData = f.readFile()
         self.dialog.dismiss()
 
@@ -65,7 +66,7 @@ class ListItemCopy(IconRightWidget):
                         text="CANCEL", on_release=self.closeDialog
                     ),
                     MDFlatButton(
-                        text="ACCEPT", text_color=self.theme_cls.primary_color, on_release=self.deleteItem
+                        text="ACCEPT", text_color=self.theme_cls.primary_color, on_release=self.copyItem
                     ),
                 ],
             )

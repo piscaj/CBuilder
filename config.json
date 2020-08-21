@@ -1,19 +1,19 @@
 {
     "Config": [
         {
-            "Command": "1*1!",
+            "Command": "1!",
             "Description": "USB routing command",
             "Name": "Classroom PC",
             "Number": 12
         },
         {
-            "Command": "0*1!",
+            "Command": "0!",
             "Description": "USB routing command",
             "Name": "No Selection",
             "Number": 31
         },
         {
-            "Command": "2*1!",
+            "Command": "2!",
             "Description": "USB routing command",
             "Name": "Laptop Wireless",
             "Number": 50714
@@ -22,7 +22,7 @@
     "Connect": [
         {
             "Directory": "/user",
-            "Host": "172.22.0.1",
+            "Host": "192.168.48.11",
             "Pass": "",
             "User": "crestron"
         }

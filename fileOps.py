@@ -14,6 +14,21 @@ class FileOperation:
             objNum = len(obj["Config"])
             return objNum
 
+    def copyFromFile(self, _key, _value):
+        with open("config.json", "r") as read_file:
+            obj = json.load(read_file)
+            #print("Searching", _key, _value)
+            for i in range(len(obj["Config"])):
+                #print(i)
+                if obj["Config"][i][_key] == int(_value):
+                    #print("Found the entry!!!!!!")
+                    obj["Config"].pop(i)
+                    break
+
+        with open("config.json", "w") as file_write:
+            file_write.write(json.dumps(obj, sort_keys=True,
+                                        indent=4, separators=(',', ': ')))
+
     def deleteFromFile(self, _key, _value):
         with open("config.json", "r") as read_file:
             obj = json.load(read_file)
