@@ -56,11 +56,11 @@ class ListItemCopy(IconRightWidget):
     def show_confirmation_dialog(self, _name):
         if not self.dialog:
             self.dialog = MDDialog(
-                title="Make another like this?",
+                title="Make another like this one?",
                 size_hint=(None, None),
                 size=(600, 500),
                 type="alert",
-                text=_name+" command will be duplicated.",
+                text=_name+" Duplicated this command.",
                 buttons=[
                     MDFlatButton(
                         text="CANCEL", on_release=self.closeDialog
