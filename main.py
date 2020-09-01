@@ -60,7 +60,7 @@ class ListItemCopy(IconRightWidget):
                 size_hint=(None, None),
                 size=(600, 500),
                 type="alert",
-                text=_name+" Duplicated this command.",
+                text=_name+", duplicated this command?",
                 buttons=[
                     MDFlatButton(
                         text="CANCEL", on_release=self.closeDialog
