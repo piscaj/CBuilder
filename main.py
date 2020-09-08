@@ -49,6 +49,7 @@ class ListItemCopy(IconRightWidget):
         
         fileData = f.readFile()
         self.dialog.dismiss()
+        self.update
 
     def closeDialog(self, inst):
         self.dialog.dismiss()
@@ -466,7 +467,7 @@ class CLBottomToolbar(MDBottomAppBar):
         if itemAdded:
             self.cList.add_widget(
                 ListItemWithEdit(id=str(itemAdded),
-                                 text="My new command", iconL="minus", iconR="plus", secondary_text="No description")
+                                 text="My new command", iconL="trash-can-outline",iconR="clipboard-plus-outline", secondary_text="No description")
             )
         fileData = f.readFile()
 
