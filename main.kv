@@ -150,7 +150,7 @@ ManagerScreen:
         MDIconButton:
             id:fSave
             icon: "content-save-outline"
-            user_font_size: "36sp"
+            #user_font_size: "36sp"
             fScreen:fScreen
             pos_hint:{"center_x": 0.5, "center_y": 0.5}
             increment_width: "75dp"
@@ -160,7 +160,7 @@ ManagerScreen:
             id:fSend
             fScreen:fScreen
             icon: "cloud-upload-outline"
-            user_font_size: "36sp"
+            #user_font_size: "36sp"
             pos_hint:{"center_x": 0.5, "center_y": 0.5}
             increment_width: "75dp"
             text:"Upload"
@@ -169,7 +169,7 @@ ManagerScreen:
             id:fRet
             fScreen:fScreen
             icon: "cloud-download-outline"
-            user_font_size: "36sp"
+            #user_font_size: "36sp"
             pos_hint:{"center_x": 0.5, "center_y": 0.5}
             increment_width: "75dp"
             text:"Retrieve"
@@ -179,9 +179,9 @@ ManagerScreen:
         id:fClose
         fScreen:fScreen
         icon: "close"
-        user_font_size: "36sp"
-        pos_hint:{"center_x": 0.93, "center_y": 0.07}
-        increment_width: "75dp"
+        #user_font_size: "24sp"
+        pos_hint:{"center_x": 0.90, "center_y": 0.07}
+        #increment_width: "75dp"
         text:"Exit"
         on_release: fScreen.goBack() 
 <EditScreen>:
@@ -313,9 +313,9 @@ ManagerScreen:
         vScreen:vScreen
         icon: "close"
         opposite_colors:True
-        user_font_size: "36sp"
-        pos_hint:{"center_x": 0.93, "center_y": 0.07}
-        increment_width: "75dp"
+        #user_font_size: "36sp"
+        pos_hint:{"center_x": 0.90, "center_y": 0.07}
+        #increment_width: "75dp"
         text:"Exit"
         on_release: vScreen.goBack()
 
