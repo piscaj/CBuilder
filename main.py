@@ -49,7 +49,7 @@ class ListItemCopy(IconRightWidget):
         
         fileData = f.readFile()
         self.dialog.dismiss()
-        self.update
+        #self.update
 
     def closeDialog(self, inst):
         self.dialog.dismiss()
@@ -61,13 +61,13 @@ class ListItemCopy(IconRightWidget):
                 size_hint=(None, None),
                 size=(600, 500),
                 type="alert",
-                text=_name+", duplicated this command?",
+                text='"'+_name+'"'+"\nWanna add another?",
                 buttons=[
                     MDFlatButton(
                         text="CANCEL", on_release=self.closeDialog
                     ),
                     MDFlatButton(
-                        text="ACCEPT", text_color=self.theme_cls.primary_color, on_release=self.copyItem
+                        text="LETS DO IT", text_color=self.theme_cls.primary_color, on_release=self.copyItem
                     ),
                 ],
             )
@@ -126,7 +126,7 @@ class CLScreen(Screen):
                 await asynckivy.sleep(0)
                 self.manager.get_screen('cl_screen').cList.add_widget(
                     ListItemWithEdit(id=str(name.get("Number")), text=name.get(
-                        "Name"), iconL="trash-can-outline",iconR="clipboard-plus-outline", secondary_text=name.get(
+                        "Name"), iconL="trash-can-outline",iconR="shape-circle-plus", secondary_text=name.get(
                         "Description"))
                 )
         asynckivy.start(updateList())
@@ -467,7 +467,7 @@ class CLBottomToolbar(MDBottomAppBar):
         if itemAdded:
             self.cList.add_widget(
                 ListItemWithEdit(id=str(itemAdded),
-                                 text="My new command", iconL="trash-can-outline",iconR="clipboard-plus-outline", secondary_text="No description")
+                                 text="My new command", iconL="trash-can-outline",iconR="shape-circle-plus", secondary_text="No description")
             )
         fileData = f.readFile()
 

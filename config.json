@@ -11,6 +11,24 @@
             "Description": "USB routing command",
             "Name": "Classroom PC",
             "Number": 10848
+        },
+        {
+            "Command": "1!",
+            "Description": "USB routing command",
+            "Name": "Classroom PC",
+            "Number": 40741
+        },
+        {
+            "Command": "1!",
+            "Description": "USB routing command",
+            "Name": "Classroom PC",
+            "Number": 24222
+        },
+        {
+            "Command": "1!",
+            "Description": "USB routing command",
+            "Name": "Classroom PC",
+            "Number": 48871
         }
     ],
     "Connect": [

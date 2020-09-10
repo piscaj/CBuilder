@@ -23,13 +23,13 @@ class FileOperation:
                 #print(i)
                 if obj["Config"][i][_key] == int(_value):
                     newItem = obj["Config"][i].copy()
-                    print("Found the entry!!!!!!", newItem)
+                    #print("Found the entry!!!!!!", newItem)
                     break
             objNum = random.randint(0, 65535)
             newItem["Number"] = objNum
-            print("Changed Numer!!!!!!", newItem)
+            #print("Changed Numer!!!!!!", newItem)
             obj["Config"].append(newItem)
-            print("NEW OBJ:", obj)
+            #print("NEW OBJ:", obj)
             
         with open("config.json", "w") as file_write:
             file_write.write(json.dumps(obj, sort_keys=True,
